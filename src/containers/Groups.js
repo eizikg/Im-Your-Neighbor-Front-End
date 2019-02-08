@@ -29,7 +29,7 @@ render (){
   console.log(this.props)
   return (
     <div>
-      {this.state.groupData.map((g) => <EachGroup memberRoute={this.props.memberRoute} groupData={g} key={g.id} user={this.props.user}/>)}
+      {this.state.groupData.map((g) => <EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.id} user={this.props.user}/>)}
     </div>
   )
 

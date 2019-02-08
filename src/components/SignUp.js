@@ -4,6 +4,19 @@ import LogIn from './LogIn.js'
 
 class SignUP extends Component {
 
+  state={
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: ""
+  }
+
+  changeHandler = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
   render() {
     return (
       <div>
@@ -20,29 +33,29 @@ class SignUP extends Component {
               <div className="row">
                 <div className="col-xs-6 col-sm-6 col-md-6">
                   <div className="form-group">
-                    <input type="text" name="first_name" id="first_name" className="form-control input-sm" placeholder="First Name"/>
+                    <input type="text" onChange={(e) => this.changeHandler(e)} name="first_name" id="first_name" value={this.state.first_name} className="form-control input-sm" placeholder="First Name"/>
                   </div>
                 </div>
                 <div className="col-xs-6 col-sm-6 col-md-6">
                   <div className="form-group">
-                    <input type="text" name="last_name" id="last_name" className="form-control input-sm" placeholder="Last Name"/>
+                    <input type="text" name="last_name" onChange={(e) => this.changeHandler(e)} value={this.state.last_name} id="last_name" className="form-control input-sm" placeholder="Last Name"/>
                   </div>
                 </div>
               </div>
 
               <div className="form-group">
-                <input type="email" name="email" id="email" className="form-control input-sm" placeholder="Email Address"/>
+                <input type="email" onChange={(e) => this.changeHandler(e)} name="email" id="email" value={this.state.email} className="form-control input-sm" placeholder="Email Address"/>
               </div>
 
               <div className="row">
                 <div className="col-xs-6 col-sm-6 col-md-6">
                   <div className="form-group">
-                    <input type="password" name="password" id="password" className="form-control input-sm" placeholder="Password"/>
+                    <input onChange={(e) => this.changeHandler(e)} type="password" name="password" id="password" value={this.state.password} className="form-control input-sm" placeholder="Password"/>
                   </div>
                 </div>
               </div>
 
-              <button type="submit" className="btn btn-primary btn-block"> Get Started  </button>
+              <button className="btn btn-primary btn-block" onClick={() => this.props.SignUp(this.state)} > Get Started  </button>
 
             </form>
           </div>
