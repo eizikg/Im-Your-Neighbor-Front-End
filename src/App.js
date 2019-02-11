@@ -59,7 +59,12 @@ class App extends React.Component {
   }
 
   JoinGroup = (group_id) => {
-    this.props.history.push('/member_page/:group_id')
+    AuthAdapter.joinGroup(this.state.user.id, group_id)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      this.props.history.push(`/members/${group_id}`)
+    })
   }
 
   has_group = () => {
@@ -79,7 +84,7 @@ class App extends React.Component {
         this.setState({
           has_group: true
         })
-        this.props.history.push('/member_page/:id')
+        this.props.history.push(`/members/${data.groups[0].id}`)
       }
       else {
         this.props.history.push('/groups')
@@ -87,18 +92,18 @@ class App extends React.Component {
     })
   }
 
-  componentWillMount(){
+  componentDidMount(){
    if (localStorage.token){
    AuthAdapter.fetchUser()
    .then(res => res.json())
    .then(data => {
-     console.log(data)
      if (!data.error) {
+       console.log(data)
        this.setState({
          user: data,
          loggedIn: true
        })
-
+       // this.has_group()
      }
      else {
        alert('incorrect username or password')
@@ -131,11 +136,12 @@ class App extends React.Component {
             render={(props) => <Groups {...props}
             user={this.state.user}
             JoinGroup={this.JoinGroup}
+            has_group={this.state.has_group}
             />}
             />
-          <Route path='/member_page'
+          <Route exact path='/members/:id'
               render={(props) => <MemberPage {...props}
-              group_data={this.state.group_data}
+              group={this.state.group_data}
               user={this.state.user}
               />}
               />

@@ -26,12 +26,16 @@ group = ()=>{
 
 
 render (){
-  console.log(this.props)
+  console.log(this.props.has_group)
+  if (!this.props.has_group){
   return (
     <div>
       {this.state.groupData.map((g) => <EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.id} user={this.props.user}/>)}
     </div>
-  )
+  )}
+  else {
+    return <h1>you already have a group</h1>
+  }
 
 }
 

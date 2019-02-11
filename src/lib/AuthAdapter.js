@@ -42,6 +42,12 @@ class AuthAdapter {
    })
  }
 
+ static fetchGroup(group_id){
+   return fetch(`http://localhost:3000/api/v1/groups/${group_id}`, {
+      headers: {"Content-Type": "application/json", Authorization: localStorage.token}
+    })
+ }
+
 
 }
 

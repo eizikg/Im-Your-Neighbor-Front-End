@@ -20,7 +20,7 @@ class Home extends Component{
         :
         <div className="navbar-inner">
         <button type="button" className="btn btn-default" onClick={() => this.props.LogOut()}>Log Out</button>
-        <button type="button" className="btn btn-primary" onClick={() => {this.props.HasGroup()}}>Members</button>
+        <button type="button" className="btn btn-primary" onClick={() => {this.props.HasGroup()}}>Group Page</button>
         </div>
       }
       </div>
