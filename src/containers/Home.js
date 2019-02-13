@@ -7,7 +7,7 @@ import AuthAdapter from '../lib/AuthAdapter'
 class Home extends Component{
 
   render(){
-    console.log(this.props.loggedIn)
+    console.log("check if user is logged in", this.props.loggedIn)
     return (
       <div>
       <div className="container">

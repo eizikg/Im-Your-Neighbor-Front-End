@@ -7,6 +7,7 @@ import MemberPage from './containers/MemberPage'
 import AuthAdapter from './lib/AuthAdapter'
 import Groups from './containers/Groups.js'
 import { withRouter } from "react-router-dom"
+// import Settings from './containers/settings.js'
 
 class App extends React.Component {
 
@@ -20,25 +21,31 @@ class App extends React.Component {
 
   LogIn = ({email, password}) => {
     AuthAdapter.checklogin(email, password)
-    .then(res => res.json())
-    .then(data =>{
-        console.log(data)
-        this.setState({
-        loggedIn: true,
-        user: data.user
-      })
-      localStorage.token = data.auth_token
-      this.has_group()
-    }
-    )
+    .then(resp => {
+      let json = resp.json()
+      // console.log(resp.status);
+      if (resp.status === 200){
+        return json.then(data =>{
+            console.log("login fetch return:", data)
+            this.setState({
+            loggedIn: true,
+            user: data.user
+          })
+          localStorage.token = data.auth_token
+          this.has_group()
+        }
+        )
+      }
+      else json.then(alert("invalid username or password"))
+    })
   }
 
   SignUp = ({first_name, last_name, email, password}) => {
-    console.log(first_name, last_name, email, password)
+    // console.log(first_name, last_name, email, password)
     AuthAdapter.createUser(first_name, last_name, email, password)
     .then(res => res.json())
     .then(data =>{
-        console.log(data)
+        console.log("created the user", data)
         this.setState({
         loggedIn: true,
         user: data.user
@@ -56,20 +63,28 @@ class App extends React.Component {
       loggedIn: false,
       user: {}
     })
+    this.props.history.push(`/`)
+  }
+
+  joinEvent=({group_id, event_id}) => {
+    AuthAdapter.joinEvent(group_id, this.state.user.id, event_id)
+    .then(res => res.json())
+    .then(data => console.log("joined the event", data))
   }
 
   JoinGroup = (group_id) => {
+    console.log(group_id)
     AuthAdapter.joinGroup(this.state.user.id, group_id)
     .then(res => res.json())
     .then(data => {
-      console.log(data)
+      console.log("joined the group", data)
       this.props.history.push(`/members/${group_id}`)
     })
   }
 
   has_group = () => {
-    console.log(this.state.user.id)
-    console.log(this.props)
+    // console.log(this.state.user.id)
+    // console.log(this.props)
     fetch(`http://localhost:3000/api/v1/volounteers/${this.state.user.id}`, {
       method: "GET",
       headers: {"Content-Type": "application/json",
@@ -77,7 +92,7 @@ class App extends React.Component {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data)
+      console.log("has group", data)
       // debugger
       let group = data.groups
       if (data.groups.length > 0 ){
@@ -98,16 +113,16 @@ class App extends React.Component {
    .then(res => res.json())
    .then(data => {
      if (!data.error) {
-       console.log(data)
+       console.log("fetching the user", data)
        this.setState({
          user: data,
          loggedIn: true
        })
        // this.has_group()
      }
-     else {
-       alert('incorrect username or password')
-     }
+     // else {
+     //   alert('incorrect username or password')
+     // }
    })
   }
 }
@@ -143,6 +158,8 @@ class App extends React.Component {
               render={(props) => <MemberPage {...props}
               group={this.state.group_data}
               user={this.state.user}
+              joinEvent={this.joinEvent}
+              logOut={this.LogOut}
               />}
               />
         </Switch>

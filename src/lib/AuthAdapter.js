@@ -1,7 +1,7 @@
 class AuthAdapter {
 
 
-  static fetchUser(user_id) {
+  static fetchUser() {
     return fetch('http://localhost:3000/api/v1/volounteers/profile', {
      method: "POST",
      headers: {"Content-Type": "application/json",
@@ -9,12 +9,24 @@ class AuthAdapter {
    })
   }
 
+
+//not completed or tested
+  static joinEvent(group_id, user_id, event_id){
+    console.log("params to create group", group_id, user_id, event_id);
+    return fetch('http://localhost:3000/api/v1/event_volounteers', {
+      method: "POST",
+      headers: {"Content-Type": "application/json",
+      Authorization: localStorage.token},
+      body: JSON.stringify({group_id: group_id, volounteer_id: user_id, event_id: event_id})
+    })
+  }
+
   static logOut() {
     localStorage.removeItem('token');
   }
 
    static checklogin (email, password) {
-     console.log(email, password);
+     console.log("params for checking the login" ,email, password);
      return fetch('http://localhost:3000/api/v1/volounteers/login', {
       method: "POST",
       headers: {"Content-Type": "application/json"},
@@ -31,7 +43,7 @@ class AuthAdapter {
  }
 
  static joinGroup(user_id, group_id){
-   console.log(user_id, group_id)
+   console.log("params for joining a group", user_id, group_id)
    return fetch('http://localhost:3000/api/v1/group_volounteers', {
      method: "POST",
      headers: {"Content-Type": "application/json", Authorization: localStorage.token},
@@ -43,9 +55,35 @@ class AuthAdapter {
  }
 
  static fetchGroup(group_id){
+   console.log("parmas for fetching group data" ,group_id)
    return fetch(`http://localhost:3000/api/v1/groups/${group_id}`, {
       headers: {"Content-Type": "application/json", Authorization: localStorage.token}
     })
+ }
+
+ static fetchEvent(event_id){
+ return fetch(`http://localhost:3000/api/v1/events/${event_id}`, {
+    headers: {"Content-Type": "application/json", Authorization: localStorage.token}
+ })
+}
+
+ static newEvent(group_id, description){
+   console.log(group_id, description);
+   return fetch(`http://localhost:3000/api/v1/events`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json", Authorization: localStorage.token},
+      body: JSON.stringify({
+        group_id: group_id,
+        description: description,
+        active: true
+      })
+   })
+ }
+
+ static getVolounteersLocation(location, range){
+   return fetch('http://localhost:3000/api/v1/volounteers/location', {
+     headers: {GeoLocation: [[location.lat, location.lng]], Range:range}
+   })
  }
 
 
