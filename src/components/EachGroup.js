@@ -43,7 +43,7 @@ const EachGroup = (props) => {
       <Card.Content extra>
         <div className='ui two buttons'>
           <Button basic color='green' onClick={() => props.JoinGroup(props.groupData.id)}>
-            Join Group
+            {props.owner ? "View": "Join"}
           </Button>
         </div>
       </Card.Content>

@@ -124,27 +124,30 @@ userGroup=[]
 // }
 
  groupdiv=() => {
-   let div =  <div><span>your groups</span> {this.state.currentUserGroups.map((g) => {
+   let div =  <div><Label color="orange">your groups</Label> {this.props.user.groups.map((g) => {
      return(
         <div>
-          <EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.id} user={this.props.user}/>
+          <EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.first_name} user={this.props.user}/>
         </div>
         )
       })
     }
     </div>
+    // console.log(div)
+    // console.log(this.props.user.groups.length)
     return div
  }
 
 
 byLocation = () => {
   if (this.state.byLocation.length > 0){
-     let div =  <div><span>near you</span> {this.state.byLocation.map((g) =>{
-      return (<div><EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.id} user={this.props.user}/></div>)
+     let div =  <div><Label color="blue">near you</Label> {this.state.byLocation.map((g) =>{
+      return (<div><EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.last_name} user={this.props.user} owner={true}/></div>)
     })
   }
 </div>
     return div
+    // console.log(div)
 }
   else{
     return false
@@ -154,6 +157,7 @@ byLocation = () => {
 
 render (){
   console.log(this.props);
+  // console.log(this.groupdiv());
   // console.log("state for if the user has a group already", this.props.has_group)
   return (
     <div>
@@ -187,21 +191,19 @@ render (){
     <Container>
     <div className="ui three column page grid">
       <hr/>
-    <div className="column">
-      <button onClick={this.showGroups}>all groups</button>
+    <div className="column" id="3">
+      {!this.state.showGroups ? <Button color={'green'} onClick={this.showGroups}>All Groups</Button>: <div><Button color={'teal'} onClick={this.showGroups}>My Groups</Button><br/><br/><br/></div>}
       { this.state.showGroups ?
          this.state.groupData.map((g) =>
-         <EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.id} user={this.props.user}/>)
+         <div><EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.id} user={this.props.user}/></div>)
            :null
          }
-         </div>
-     <div className="column">
-   </div>
-   <div className="column">
+       </div>
+   <div className="column" id="2">
      {this.byLocation() }
    </div>
-   <div className="column">
-     {this.state.currentUserGroups.length > 0 ? this.groupdiv(): null}
+   <div className="column" id="1">
+     {this.props.user.groups && this.props.user.groups.length > 0 ? this.groupdiv(): null}
    </div>
      </div>
 
