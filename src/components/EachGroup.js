@@ -28,13 +28,14 @@
 import React from 'react'
 import { Button, Card, Image } from 'semantic-ui-react'
 
-const EachGroup = (props) => (
-  <Card.Group>
+const EachGroup = (props) => {
+  console.log(props);
+  return (
     <Card>
       <Card.Content>
-        <Image floated='right' size='mini' src='/images/avatar/large/steve.jpg' />
+        <Image floated='right' size='mini' src='http://www.austingalano.org/wp-content/uploads/2015/09/groups.jpg' />
         <Card.Header>{props.groupData.name}</Card.Header>
-        <Card.Meta>Friends of Elliot</Card.Meta>
+        <Card.Meta>{props.groupData.volounteers_count} Members</Card.Meta>
         <Card.Description>
           {props.groupData.description}
         </Card.Description>
@@ -47,7 +48,6 @@ const EachGroup = (props) => (
         </div>
       </Card.Content>
     </Card>
-  </Card.Group>
-)
+)}
 
 export default EachGroup

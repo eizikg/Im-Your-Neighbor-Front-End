@@ -80,9 +80,27 @@ class AuthAdapter {
    })
  }
 
- static getVolounteersLocation(location, range){
-   return fetch('http://localhost:3000/api/v1/volounteers/location', {
-     headers: {GeoLocation: [[location.lat, location.lng]], Range:range}
+ static getVolounteersLocation(location, range, user){
+   return fetch('http://localhost:3000/api/v1/location/volounteers', {
+     headers: {GeoLocation: [[location.lat, location.lng]], Range:range, User:user.id}
+   })
+ }
+
+ static getGroupsLocation(location, range, user){
+   return fetch('http://localhost:3000/api/v1/location/groups', {
+     headers: {GeoLocation: [[location.lat, location.lng]], Range:range, User:user.id}
+   })
+ }
+
+ static createGroup(name, description, user){
+   return fetch('http://localhost:3000/api/v1/groups', {
+     method: "POST",
+     headers: {"Content-Type": "application/json", Authorization: localStorage.token},
+     body: JSON.stringify({
+       volounteer_id: user.id,
+       name: name,
+       description: description
+     })
    })
  }
 

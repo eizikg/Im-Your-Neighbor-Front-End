@@ -32,7 +32,7 @@ export default class NewEvent extends Component {
   render() {
     return (
       <Modal
-      trigger={<Button onClick={this.handleOpen}>new event</Button>}
+      trigger={<Button primary onClick={this.handleOpen}>new event</Button>}
       centered={false}
       open={this.state.modalOpen}
       onClose={this.handleClose}

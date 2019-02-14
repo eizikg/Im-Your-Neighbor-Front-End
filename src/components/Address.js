@@ -2,6 +2,7 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 import {geocodeByAddress, geocodeByPlaceId, getLatLng} from 'react-places-autocomplete';
 import React, { Component } from 'react';
 import EachGroup from '../components/EachGroup.js'
+import { Input, Container} from 'semantic-ui-react'
 
 class Address extends Component {
 
@@ -41,9 +42,9 @@ render() {
     >
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
         <div>
-          <input
+          <Input
             {...getInputProps({
-              placeholder: 'Search Places ...',
+              placeholder: 'Type your address ...',
               className: 'location-search-input',
             })}
           />
