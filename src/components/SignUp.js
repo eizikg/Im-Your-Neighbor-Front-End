@@ -18,6 +18,7 @@ class SignUP extends Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <div>
       <div className="container">

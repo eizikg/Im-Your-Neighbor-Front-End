@@ -76,12 +76,15 @@ class MemberPage extends Component {
         <Header.Subheader>{this.state.group_info.description}</Header.Subheader>
     </Header>
   </div> : null}
+      <Button add onClick={() => this.props.logOut()}>log out</Button>
+      <Button onClick={() => this.props.history.push(`/groups`)}>Groups</Button>
+      <br/>
+      <br/>
+      <br/>
       <NewEvent
         group_id={this.props.match.params.id}
         newEvent={this.newEvent}
         />
-      <Button onClick={() => this.props.logOut()}>log out</Button>
-      <Button onClick={() => this.props.history.push(`/groups`)}>Groups</Button>
      <br/>
       <hr/>
       </Container>
@@ -97,6 +100,7 @@ class MemberPage extends Component {
       <br/>
       <Grid coloums={2} divided>
         <Grid.Column>
+          <Header>Group Members</Header>
       {this.state.members.map((member) => {
         return <MembersList
           member={member}

@@ -9,6 +9,16 @@ class AuthAdapter {
    })
   }
 
+  static fetchUserGroups(user_id) {
+    return fetch(`http://localhost:3000/api/v1/volounteers/${user_id}`, {
+     method: "POST",
+     headers: {"Content-Type": "application/json",
+     Authorization: localStorage.token}
+   })
+  }
+
+
+
 
 //not completed or tested
   static joinEvent(group_id, user_id, event_id){

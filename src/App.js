@@ -41,7 +41,7 @@ class App extends React.Component {
   }
 
   SignUp = ({first_name, last_name, email, password}) => {
-    // console.log(first_name, last_name, email, password)
+    console.log(first_name, last_name, email, password)
     AuthAdapter.createUser(first_name, last_name, email, password)
     .then(res => res.json())
     .then(data =>{
@@ -152,6 +152,7 @@ class App extends React.Component {
             user={this.state.user}
             JoinGroup={this.JoinGroup}
             has_group={this.state.has_group}
+            LogOut={this.LogOut}
             />}
             />
           <Route exact path='/members/:id'

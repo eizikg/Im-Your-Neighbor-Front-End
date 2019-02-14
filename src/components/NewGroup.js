@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Button, Checkbox, Form } from 'semantic-ui-react'
-import { Header, Icon, Modal} from 'semantic-ui-react'
+import { Header, Icon, Modal, Label} from 'semantic-ui-react'
 
 class newGroup extends Component {
 
@@ -27,7 +27,7 @@ class newGroup extends Component {
      console.log("create group")
      this.props.createGroup({name: this.state.name, descripton: this.state.description})
      // this.handleClose()
-     this.setState({ modalOpen: false })
+     this.setState({ modalOpen: false, name: "", descripton: "" })
   }
 
 
@@ -52,7 +52,7 @@ class newGroup extends Component {
 render(){
 return (
   <Modal
-  trigger={<Button onClick={this.handleOpen}>Create a New Group</Button>}
+  trigger={<Button className="big" color='teal' onClick={this.handleOpen}>Create a New Group</Button>}
   centered={true}
   open={this.state.modalOpen}
   onClose={this.handleClose}
@@ -64,18 +64,18 @@ return (
   <Form>
     <h3>New Group</h3>
       <Form.Field>
-        <label>Name</label>
-        <input placeholder='' name='name' value={this.state.name} onChange={(e) => this.changeHandler(e)}/>
+        <label>Neighborehood</label>
+        <input placeholder='city or neighborhood' name='name' value={this.state.name} onChange={(e) => this.changeHandler(e)}/>
       </Form.Field>
       <Form.Field>
         <label>Description</label>
-        <input placeholder='' name='descripton' value={this.state.description} onChange={(e) => this.changeHandler(e)}/>
+        <input placeholder='Description' name='descripton' value={this.state.description} onChange={(e) => this.changeHandler(e)}/>
       </Form.Field>
-      <Button type='submit' onClick={this.createGroup}>Submit</Button>
+      <Label type='submit' onClick={this.handleClose}>Cancel</Label>
+      <Button color='teal' btn btn-primary type='submit' onClick={this.createGroup}>Submit</Button>
   </Form>
   <Modal.Description>
       <Header>Default Profile Image</Header>
-      <p>category</p>
   </Modal.Description>
 </Modal.Content>
 </Modal>

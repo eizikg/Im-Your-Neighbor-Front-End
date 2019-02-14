@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card, Icon, Image } from 'semantic-ui-react'
 import { Grid} from 'semantic-ui-react'
+import Person from '../lib/person image.jpg'
 
 const MembersList = ({member}) => (
 
@@ -14,8 +15,9 @@ const MembersList = ({member}) => (
           }`
       }
     </style>
-    <Image src='https://us.123rf.com/450wm/triken/triken1608/triken160800029/61320775-stock-vector-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg?ver=6' />
+
     <Card.Content>
+      <Image src='https://us.123rf.com/450wm/triken/triken1608/triken160800029/61320775-stock-vector-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg?ver=6' />
       <Card.Header>{member.first_name} {member.last_name}</Card.Header>
       <Card.Meta>
         {member.is_admin ?  <span>Admin</span>: null}

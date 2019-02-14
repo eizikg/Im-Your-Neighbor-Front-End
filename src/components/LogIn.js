@@ -33,7 +33,7 @@ class LogIn extends Component {
           <article className="card-body">
           <button className="float-right btn btn-outline-primary" onClick={() => this.props.history.push('/signup')}>sign up</button>
           <h4 className="card-title mb-10 mt-4">Sign in</h4>
-             <form>
+             <form onSubmit={(e) => e.preventDefault()}>
               <div className="form-group">
                 <label>Your email</label>
                   <input name="email" value={this.state.email} onChange={(e) => this.changeHandler(e)} className="form-control" id="email" placeholder="Email" type="email"/>
@@ -41,12 +41,12 @@ class LogIn extends Component {
               <div className="form-group">
                 <button className="float-right" >Forgot?</button>
                 <label>Your password</label>
-                  <input name="password" value={this.state.password} className="form-control" id="password" placeholder="******" type="password" onChange={(e) => this.changeHandler(e)}/>
+                  <input name="password" value={this.state.password} className="form-control" id="password" type="password" onChange={(e) => this.changeHandler(e)}/>
               </div>
               <div className="form-group">
               </div>
               <div className="form-group">
-                  <button onClick={() => this.props.LogIn(this.state)} className="btn btn-primary btn-block"> Login  </button>
+                  <button onClick={(e) => this.props.LogIn(this.state)} className="btn btn-primary btn-block"> Login  </button>
               </div>
           </form>
           </article>

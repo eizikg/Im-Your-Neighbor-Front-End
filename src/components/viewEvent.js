@@ -54,7 +54,7 @@ class ViewEvent extends Component{
           <p>{`${volounteer.first_name} ${volounteer.last_name}`}</p>
           </div>)
 : null}
-        <Button href="#" className={this.style()} onClick={(e) => this.joinEvent()}>Join event</Button>
+        <Button href="#" className={this.style()} onClick={(e) => this.joinEvent()}>I'm available to help</Button>
       </Modal.Description>
     </Modal.Content>
   </Modal>

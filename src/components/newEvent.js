@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react'
+import { Button, Header, Icon, Modal, Form, Label} from 'semantic-ui-react'
 import AuthAdapter from '../lib/AuthAdapter'
 
 export default class NewEvent extends Component {
@@ -24,7 +24,7 @@ export default class NewEvent extends Component {
     console.log("new event compoent")
     this.props.newEvent(this.state.description)
     this.handleClose()
-    this.setState({ modalOpen: false })
+    this.setState({ modalOpen: false, description: "" })
   }
 
 
@@ -32,31 +32,30 @@ export default class NewEvent extends Component {
   render() {
     return (
       <Modal
-      trigger={<Button primary onClick={this.handleOpen}>new event</Button>}
+      trigger={<div><Icon name="add circle huge icon" color="teal"onClick={this.handleOpen}></Icon><Label>new event</Label></div>}
       centered={false}
       open={this.state.modalOpen}
       onClose={this.handleClose}
       basic
       size='small'
       >
-    <Modal.Header>Select a Photo</Modal.Header>
+    <Modal.Header>Request for help</Modal.Header>
     <Modal.Content image>
       <Form>
-        <h3>new event</h3>
-          <Form.Field>
-            <label>Description</label>
-            <input placeholder='' name='name' value={this.state.description} onChange={(e) => this.changeHandler(e)}/>
-          </Form.Field>
-          <Button type='submit' onClick={this.submitHandler}>Submit</Button>
+          <Form.TextArea placeholder="Describe your problem" value={this.state.description} onChange={(e) => this.changeHandler(e)}/>
+          <Label onClick={this.handleClose}>Cancel</Label>
+          <Button color="teal" type='submit' onClick={this.submitHandler}>Submit</Button>
       </Form>
       <Modal.Description>
           <Header>Default Profile Image</Header>
-          <p>category</p>
       </Modal.Description>
     </Modal.Content>
   </Modal>
     )
   }
 }
+
+// <input placeholder='Describe what you need' name='name' value={this.state.description} onChange={(e) => this.changeHandler(e)}/>
+// <label>Description</label>
 
 // export default NewEvent
