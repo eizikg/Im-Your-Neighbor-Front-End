@@ -198,6 +198,7 @@ render (){
      <div className="column">
    </div>
    <div className="column">
+     {this.byLocation() }
    </div>
    <div className="column">
      {this.state.currentUserGroups.length > 0 ? this.groupdiv(): null}
