@@ -11,7 +11,8 @@ state={
   groupData: [],
   byLocation: [],
   showGroups: false,
-  currentUserGroups: []
+  currentUserGroups: [],
+  hasAddress: false
 }
 
 componentDidMount(){
@@ -90,7 +91,8 @@ getVolounteersLocation=({location}) =>{
     console.log(data)
     if (data.length > 0){
     this.setState({
-      byLocation: data
+      byLocation: data,
+      hasAddress: true
     })
   }
   })
@@ -159,6 +161,7 @@ render (){
   console.log(this.props);
   // console.log(this.groupdiv());
   // console.log("state for if the user has a group already", this.props.has_group)
+  if (this.state.hasAddress){
   return (
     <div>
       <Button add onClick={() => this.props.logOut()}>log out</Button>
@@ -209,7 +212,31 @@ render (){
 
  </Container>
     </div>
-  )
+  )}
+  else {
+    return (
+      <Container>
+      <Header as='h2' icon>
+    <Icon name='users' circular />
+    <Header.Content>Groups</Header.Content>
+    <Header.Subheader>Join existiong groups or create your very own</Header.Subheader>
+    <br/>
+    <br/>
+    <br/>
+    <Header>Start by providing your address</Header>  
+    <Container>
+      <Address
+        getVolounteersLocation={this.getVolounteersLocation}
+        getGroupsLocation={this.getGroupsLocation}
+        groupData={this.state.byLocation}
+        user={this.props.user}
+        />
+      <Label color='teal'>Type in your address and discover groups near you.</Label>
+    </Container>
+  </Header>
+    </Container>
+    )
+  }
 }
 
 }

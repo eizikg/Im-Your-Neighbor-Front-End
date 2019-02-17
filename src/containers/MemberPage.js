@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AuthAdapter from '../lib/AuthAdapter'
 import EventTop from '../components/EventTop'
 import NewEvent from '../components/newEvent'
-import { Container, Grid, Button, Header, Icon, Modal, Form} from 'semantic-ui-react'
+import { Container, Grid, Button, Header, Icon, Modal, Form, Segment, Dimmer, Loader} from 'semantic-ui-react'
 import MembersList from '../components/MembersList'
 
 
@@ -10,10 +10,12 @@ class MemberPage extends Component {
 
   state={
     eventData: [],
-    members: []
+    members: [],
+    loading: true
   }
 
   componentDidUpdate(prevProps){
+    setTimeout(() => { this.setState({ loading: false}); }, 1000);
     if (this.props.user.id !== prevProps.user.id  && this.props.user){
     // console.log(this.props, this.props.match.params.id)
       AuthAdapter.fetchGroup(this.props.match.params.id)
@@ -33,6 +35,7 @@ class MemberPage extends Component {
   }
 
   componentDidMount(prevProps){
+    setTimeout(() => { this.setState({ loading: false}); }, 3000);
     if (this.props.user){
       AuthAdapter.fetchGroup(this.props.match.params.id)
       .then(res => res.json())
@@ -65,6 +68,7 @@ class MemberPage extends Component {
   }
 
   render() {
+    if (!this.state.loading){
     console.log("state of member page", this.state)
     return (
     <div>
@@ -112,6 +116,14 @@ class MemberPage extends Component {
     </div>
     );
   }
+  else {
+    return (
+      <Dimmer active inverted>
+        <Loader size='large'>Getting Group info..</Loader>
+      </Dimmer>
+    )
+  }
+}
 
 }
 // <div className="row">

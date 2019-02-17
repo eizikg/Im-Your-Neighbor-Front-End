@@ -69,7 +69,10 @@ class App extends React.Component {
   joinEvent=({group_id, event_id}) => {
     AuthAdapter.joinEvent(group_id, this.state.user.id, event_id)
     .then(res => res.json())
-    .then(data => console.log("joined the event", data))
+    .then(data => {
+      console.log("joined the event", data)
+      // window.location.reload();
+    })
   }
 
   JoinGroup = (group_id) => {
