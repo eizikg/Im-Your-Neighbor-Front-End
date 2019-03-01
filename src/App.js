@@ -7,6 +7,7 @@ import MemberPage from './containers/MemberPage'
 import AuthAdapter from './lib/AuthAdapter'
 import Groups from './containers/Groups.js'
 import { withRouter } from "react-router-dom"
+import Messaging from './containers/Messaging.js'
 // import Settings from './containers/settings.js'
 
 class App extends React.Component {
@@ -44,6 +45,7 @@ class App extends React.Component {
     console.log(first_name, last_name, email, password)
     AuthAdapter.createUser(first_name, last_name, email, password)
     .then(res => res.json())
+    .catch(error => console.log(error))
     .then(data =>{
         console.log("created the user", data)
         this.setState({

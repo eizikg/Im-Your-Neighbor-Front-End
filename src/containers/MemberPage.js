@@ -4,6 +4,8 @@ import EventTop from '../components/EventTop'
 import NewEvent from '../components/newEvent'
 import { Container, Grid, Button, Header, Icon, Modal, Form, Segment, Dimmer, Loader} from 'semantic-ui-react'
 import MembersList from '../components/MembersList'
+import Sidebar from '../components/sidebar'
+import Messaging from './Messaging.js'
 
 
 class MemberPage extends Component {
@@ -11,23 +13,20 @@ class MemberPage extends Component {
   state={
     eventData: [],
     members: [],
-    loading: true
+    loading: false
   }
 
   componentDidUpdate(prevProps){
-    setTimeout(() => { this.setState({ loading: false}); }, 1000);
+    // setTimeout(() => { this.setState({ loading: false}); }, 1000);
     if (this.props.user.id !== prevProps.user.id  && this.props.user){
     // console.log(this.props, this.props.match.params.id)
       AuthAdapter.fetchGroup(this.props.match.params.id)
       .then(res => res.json())
       .then(data =>{
         console.log("fetching the groups", data[0].group_volounteers)
-        let members = data[0].group_volounteers.map((volounteer) => {
-          return volounteer.volounteer
-        })
       this.setState({
         eventData: data[0].events,
-        members: members,
+        members: data[0].volounteers,
         group_info: data[0]
       })
     })
@@ -35,18 +34,15 @@ class MemberPage extends Component {
   }
 
   componentDidMount(prevProps){
-    setTimeout(() => { this.setState({ loading: false}); }, 3000);
+    // setTimeout(() => { this.setState({ loading: false}); }, 3000);
     if (this.props.user){
       AuthAdapter.fetchGroup(this.props.match.params.id)
       .then(res => res.json())
       .then(data =>{
         console.log("fetching the groups", data[0].group_volounteers)
-        let members = data[0].group_volounteers.map((volounteer) => {
-          return volounteer.volounteer
-        })
       this.setState({
         eventData: data[0].events,
-        members: members,
+        members: data[0].volounteers,
         group_info: data[0]
       })
     })
@@ -72,6 +68,8 @@ class MemberPage extends Component {
     console.log("state of member page", this.state)
     return (
     <div>
+      <Sidebar/>
+      <Messaging/>
       <Container>
         {this.state.group_info ?
           <div>
