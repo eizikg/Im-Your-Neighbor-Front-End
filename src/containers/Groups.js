@@ -4,6 +4,7 @@ import Address from '../components/Address.js'
 import AuthAdapter from '../lib/AuthAdapter'
 import NewGroup from '../components/NewGroup.js'
 import {Container, Header, Icon, Grid, Button, Label} from 'semantic-ui-react'
+// import Messaging from './Messaging.js'
 
 class Groups extends Component {
 
@@ -223,7 +224,7 @@ render (){
     <br/>
     <br/>
     <br/>
-    <Header>Start by providing your address</Header>  
+    <Header>Start by providing your address</Header>
     <Container>
       <Address
         getVolounteersLocation={this.getVolounteersLocation}

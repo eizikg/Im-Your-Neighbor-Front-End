@@ -6,6 +6,7 @@ import { Container, Grid, Button, Header, Icon, Modal, Form, Segment, Dimmer, Lo
 import MembersList from '../components/MembersList'
 import Sidebar from '../components/sidebar'
 import Messaging from './Messaging.js'
+// import 'semantic-ui-css/semantic.min.css'
 
 
 class MemberPage extends Component {
@@ -64,12 +65,8 @@ class MemberPage extends Component {
   }
 
   render() {
-    if (!this.state.loading){
-    console.log("state of member page", this.state)
     return (
     <div>
-      <Sidebar/>
-      <Messaging/>
       <Container>
         {this.state.group_info ?
           <div>
@@ -102,25 +99,17 @@ class MemberPage extends Component {
       <br/>
       <Grid coloums={2} divided>
         <Grid.Column>
-          <Header>Group Members</Header>
       {this.state.members.map((member) => {
-        return <MembersList
-          member={member}
-          />
+        // return <MembersList
+        //   member={member}
+        //   />
       })}
     </Grid.Column>
      </Grid>
+       <Messaging/>
     </Container>
     </div>
     );
-  }
-  else {
-    return (
-      <Dimmer active inverted>
-        <Loader size='large'>Getting Group info..</Loader>
-      </Dimmer>
-    )
-  }
 }
 
 }

@@ -6,6 +6,7 @@ import App from './App';
 import LogIn from './components/LogIn'
 import SignUp from './components/SignUp'
 import * as serviceWorker from './serviceWorker';
+// import 'semantic-ui-css/semantic.min.css'
 
 
 

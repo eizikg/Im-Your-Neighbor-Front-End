@@ -4,6 +4,7 @@ import SignUp from '../components/SignUp'
 import { Route, Link, Switch} from "react-router-dom";
 import AuthAdapter from '../lib/AuthAdapter'
 import PropTypes from 'prop-types'
+import HelpImage from '../lib/home_help.png'
 import {
   Button,
   Container,
@@ -68,11 +69,12 @@ const getWidth = () => {
  * such things.
  */
 const HomepageHeading = ({ mobile }) => (
-  <Container text>
+  <Container id="home-header"
+     >
     <Header
       as='h1'
-      content='Neighborehood Community'
       inverted
+      content='Neighborehood Community'
       style={{
         fontSize: mobile ? '2em' : '4em',
         fontWeight: 'normal',
@@ -81,9 +83,9 @@ const HomepageHeading = ({ mobile }) => (
       }}
     />
     <Header
+      inverted
       as='h2'
       content='Lend a hand to a neighbor'
-      inverted
       style={{
         fontSize: mobile ? '1.5em' : '1.7em',
         fontWeight: 'normal',
@@ -158,7 +160,11 @@ class DesktopContainer extends Component {
             }
               </Container>
             </Menu>
+            <div
+              style={{ minHeight: 700, padding: '1em 0em', backgroundImage: "url(" + HelpImage + ")", maxWidth: '100%', height: 'auto', width: 'auto\9' }}
+              >
             <HomepageHeading />
+            </div>
           </Segment>
         </Visibility>
 

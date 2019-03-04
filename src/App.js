@@ -8,6 +8,8 @@ import AuthAdapter from './lib/AuthAdapter'
 import Groups from './containers/Groups.js'
 import { withRouter } from "react-router-dom"
 import Messaging from './containers/Messaging.js'
+import MainPageLayout from './containers/mainPageLayout.js'
+// import 'semantic-ui-css/semantic.min.css'
 // import Settings from './containers/settings.js'
 
 class App extends React.Component {
@@ -152,6 +154,14 @@ class App extends React.Component {
           <Route path='/signup'
               render={(props) => <SignUp {...props} SignUp={this.SignUp}/>}
               />
+            <Route path='/test'
+                render={(props) => <MainPageLayout {...props}
+                group={this.state.group_data}
+                user={this.state.user}
+                joinEvent={this.joinEvent}
+                logOut={this.LogOut}
+                />}
+                />
           <Route path='/groups'
             render={(props) => <Groups {...props}
             user={this.state.user}
