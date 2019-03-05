@@ -21,13 +21,13 @@ class AuthAdapter {
 
 
 //not completed or tested
-  static joinEvent(group_id, user_id, event_id){
-    console.log("params to create group", group_id, user_id, event_id);
+  static joinEvent(params){
+    console.log("params to create group", params);
     return fetch('http://localhost:3000/api/v1/event_volounteers', {
       method: "POST",
       headers: {"Content-Type": "application/json",
       Authorization: localStorage.token},
-      body: JSON.stringify({group_id: group_id, volounteer_id: user_id, event_id: event_id})
+      body: JSON.stringify(params)
     })
   }
 

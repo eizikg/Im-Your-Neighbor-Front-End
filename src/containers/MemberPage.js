@@ -6,6 +6,7 @@ import { Container, Grid, Button, Header, Icon, Modal, Form, Segment, Dimmer, Lo
 import MembersList from '../components/MembersList'
 import Sidebar from '../components/sidebar'
 import Messaging from './Messaging.js'
+import { withRouter } from "react-router";
 // import 'semantic-ui-css/semantic.min.css'
 
 
@@ -19,7 +20,7 @@ class MemberPage extends Component {
 
   componentDidUpdate(prevProps){
     // setTimeout(() => { this.setState({ loading: false}); }, 1000);
-    if (this.props.user.id !== prevProps.user.id  && this.props.user){
+    if (this.props.match.params.id !== prevProps.match.params.id){
     // console.log(this.props, this.props.match.params.id)
       AuthAdapter.fetchGroup(this.props.match.params.id)
       .then(res => res.json())
@@ -50,8 +51,11 @@ class MemberPage extends Component {
    }
   }
 
+  nextGroup =()=>{
+    this.props.history.push(`/members/2`)
+  }
+
   newEvent = (description) => {
-    //can't access props here
     AuthAdapter.newEvent(this.props.match.params.id, description)
     .then(res => res.json())
     .then(data => {
@@ -65,8 +69,10 @@ class MemberPage extends Component {
   }
 
   render() {
+    console.log(this.props.user.groups)
     return (
     <div>
+      <Button onClick={this.nextGroup}>next group</Button>
       <Container>
         {this.state.group_info ?
           <div>
@@ -104,6 +110,8 @@ class MemberPage extends Component {
         //   member={member}
         //   />
       })}
+    </Grid.Column>
+    <Grid.Column>
     </Grid.Column>
      </Grid>
        <Messaging/>

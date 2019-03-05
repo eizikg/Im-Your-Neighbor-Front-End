@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import Login from '../components/LogIn'
 import SignUp from '../components/SignUp'
 import { Route, Link, Switch} from "react-router-dom";
-import AuthAdapter from '../lib/AuthAdapter'
+import AuthAdapter from '/Users/flatironschool/Development/final-project/final-project-front-end-2/src/lib/AuthAdapter.js'
 import PropTypes from 'prop-types'
-import EventTop from '../components/EventTop'
 import HelpImage from '../lib/home_help.png'
+import { withRouter } from "react-router";
+import EventTop from '../components/memberPage/EventTop.js'
+import Messaging from './Messaging.js'
+import LeftMenu from '../components/memberPage/LeftMenu.js'
+// import ResponsiveContainer from './responsiveContainer.js'
 import {
   Button,
   Container,
@@ -33,53 +37,39 @@ const getWidth = () => {
 /* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
  * such things.
  */
-class HomepageHeading extends Component{
-
-  render(){
-  const { activeItem } = this.state || {}
-  const { mobile } = this.props
-  return(
-    <div>
-     <Header
-       as='h1'
-       inverted
-       content='Neighborehood Community'
-       style={{
-         fontSize: mobile ? '2em' : '4em',
-         fontWeight: 'normal',
-         marginBottom: 0,
-         marginTop: mobile ? '1.5em' : '3em',
-       }}
-     />
-     <Header
-       inverted
-       as='h2'
-       content='Lend a hand to a neighbor'
-       style={{
-         fontSize: mobile ? '1.5em' : '1.7em',
-         fontWeight: 'normal',
-         marginTop: mobile ? '0.5em' : '1.5em',
-       }}
-     />
-     </div>
-)}}
-
-HomepageHeading.propTypes = {
-  mobile: PropTypes.bool,
-}
 
 /* Heads up!
  * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
  * It can be more complicated, but you can create really flexible markup.
  */
-class DesktopContainer extends Component {
+
+ class HomepageHeading extends Component{
+
+
+
+   render(){
+       const { activeItem } = this.state || {}
+       const { mobile } = this.props
+       console.log(this.props)
+       return(
+         <div>
+          </div>
+     )
+   }
+ }
+
+export class DesktopContainer extends Component {
   state = {}
 
   render() {
 
     const { children } = this.props
     const { fixed } = this.state
-    const { activeItem } = this.state || {}
+    const getWidth = () => {
+      const isSSR = typeof window === 'undefined'
+
+      return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
+    }
 
     return (
       <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
@@ -89,96 +79,23 @@ class DesktopContainer extends Component {
           onBottomPassedReverse={this.hideFixedMenu}
         >
           <Grid>
-          <Grid.Column width={4}>
-          <Menu id="menu" vertical style={{ minHeight: 1000}}>
-          <Menu.Item>
-          <Menu.Header>Products</Menu.Header>
-
-          <Menu.Menu>
-          <Menu.Item
-          name='enterprise'
-          active={activeItem === 'enterprise'}
-          onClick={this.handleItemClick}
-          />
-          <Menu.Item
-          name='consumer'
-          active={activeItem === 'consumer'}
-          onClick={this.handleItemClick}
-          />
-          </Menu.Menu>
-          </Menu.Item>
-
-          <Menu.Item>
-          <Menu.Header>CMS Solutions</Menu.Header>
-
-          <Menu.Menu>
-          <Menu.Item
-          name='rails'
-          active={activeItem === 'rails'}
-          onClick={this.handleItemClick}
-          />
-          <Menu.Item
-          name='python'
-          active={activeItem === 'python'}
-          onClick={this.handleItemClick}
-          />
-          <Menu.Item
-          name='php'
-          active={activeItem === 'php'}
-          onClick={this.handleItemClick}
-          />
-          </Menu.Menu>
-          </Menu.Item>
-
-          <Menu.Item>
-          <Menu.Header>Hosting</Menu.Header>
-
-          <Menu.Menu>
-          <Menu.Item
-          name='shared'
-          active={this.activeItem === 'shared'}
-          onClick={this.handleItemClick}
-          />
-          <Menu.Item
-          name='dedicated'
-          active={this.activeItem === 'dedicated'}
-          onClick={this.handleItemClick}
-          />
-          </Menu.Menu>
-          </Menu.Item>
-
-          <Menu.Item>
-          <Menu.Header>Support</Menu.Header>
-
-          <Menu.Menu>
-          <Menu.Item
-          name='email'
-          active={this.activeItem === 'email'}
-          onClick={this.handleItemClick}
-          >
-          E-mail Support
-          </Menu.Item>
-
-          <Menu.Item
-          name='faq'
-          active={this.activeItem === 'faq'}
-          onClick={this.handleItemClick}
-          >
-          FAQs
-          </Menu.Item>
-          </Menu.Menu>
-          </Menu.Item>
-          </Menu>
+          <Grid.Column width={3}>
+            <LeftMenu members={this.props.members} eventData={this.props.eventData} groupData={this.props.groupData} user={this.props.user}/>
           </Grid.Column>
           <Grid.Column width={12}>
           <Segment
-              inverted
+
               textAlign='center'
-              style={{ minHeight: 400, padding: '1em 0em' }}
+              style={{ minHeight: 50, padding: '1em 0em' }}
               vertical
             >
-          <HomepageHeading />
+
           </Segment>
+          <EventTop
+            eventData={this.props.eventData}
+            user={this.props.user}
+            />
+          <Messaging/>
           </Grid.Column>
           </Grid>
 
@@ -195,7 +112,11 @@ DesktopContainer.propTypes = {
   children: PropTypes.node,
 }
 
-class MobileContainer extends Component {
+HomepageHeading.propTypes = {
+  mobile: PropTypes.bool,
+}
+
+export class MobileContainer extends Component {
   state = {}
 
   handleSidebarHide = () => this.setState({ sidebarOpened: false })
@@ -213,7 +134,7 @@ class MobileContainer extends Component {
         maxWidth={Responsive.onlyMobile.maxWidth}
       >
           <Segment
-            inverted
+
             textAlign='center'
             style={{ minHeight: 350, padding: '1em 0em' }}
             vertical
@@ -226,22 +147,17 @@ class MobileContainer extends Component {
   }
 }
 
-MobileContainer.propTypes = {
-  children: PropTypes.node,
-}
-
-class ResponsiveContainer extends Component {
+export class ResponsiveContainer extends Component {
 
   state={
     eventData: [],
     members: [],
-    group: {}
+    groupData: []
   }
 
   componentDidUpdate(prevProps){
-    // setTimeout(() => { this.setState({ loading: false}); }, 1000);
-    if (this.props.user.id !== prevProps.user.id  && this.props.user){
-    // console.log(this.props, this.props.match.params.id)
+    if (this.props.match.params.id !== prevProps.match.params.id){
+      console.log(this.props)
       AuthAdapter.fetchGroup(this.props.match.params.id)
       .then(res => res.json())
       .then(data =>{
@@ -258,14 +174,15 @@ class ResponsiveContainer extends Component {
   componentDidMount(prevProps){
     // setTimeout(() => { this.setState({ loading: false}); }, 3000);
     if (this.props.user){
+      console.log(this.props)
       AuthAdapter.fetchGroup(this.props.match.params.id)
       .then(res => res.json())
       .then(data =>{
-        console.log("fetching the groups", data[0].group_volounteers)
+        console.log("fetching the groups", data)
       this.setState({
         eventData: data[0].events,
         members: data[0].volounteers,
-        group_info: data[0]
+        groupData: data[0]
       })
     })
    }
@@ -288,11 +205,17 @@ class ResponsiveContainer extends Component {
   render (){
   return (
   <div>
-    <DesktopContainer loggedIn={this.props.loggedIn} history={this.props.history} LogOut={this.props.LogOut} HasGroup={this.props.HasGroup} user={this.props.user}>{this.props.children}</DesktopContainer>
-    <MobileContainer loggedIn={this.props.loggedIn} history={this.props.history} LogOut={this.props.LogOut} HasGroup={this.props.HasGroup}></MobileContainer>
+    <DesktopContainer members={this.state.members} eventData={this.state.eventData} groupData={this.state.groupData} loggedIn={this.props.loggedIn} history={this.props.history} LogOut={this.props.LogOut} HasGroup={this.props.HasGroup} user={this.props.user}>{this.props.children}</DesktopContainer>
+    <MobileContainer members={this.state.members} eventData={this.state.eventData} groupData={this.state.groupData}loggedIn={this.props.loggedIn} history={this.props.history} LogOut={this.props.LogOut} HasGroup={this.props.HasGroup}></MobileContainer>
   </div>
 )}
 }
+
+
+MobileContainer.propTypes = {
+  children: PropTypes.node,
+}
+
 
 ResponsiveContainer.propTypes = {
   children: PropTypes.node,
@@ -306,10 +229,12 @@ class MainPageLayout extends Component{
   <ResponsiveContainer
   loggedIn={this.props.loggedIn}
   history={this.props.history}
+  match={this.props.match}
   LogOut={this.props.LogOut}
   HasGroup={this.props.HasGroup}
   user={this.props.user}
   />
 )}
 }
-export default MainPageLayout
+export default withRouter(MainPageLayout)
+// export {MobileContainer, DesktopContainer}

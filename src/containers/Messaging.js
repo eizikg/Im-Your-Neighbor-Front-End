@@ -28,12 +28,10 @@ class Messaging extends Component {
        chatManager.connect()
        .then(currentUser => {
             this.currentUser = currentUser
-            console.log(currentUser)
             currentUser.subscribeToRoom({
             roomId: currentUser.rooms[0].id,
             hooks: {
                 onNewMessage: message => {
-                   console.log("new message", message.text)
                     this.setState({
                         messages: [...this.state.messages, message]
                     })
@@ -44,7 +42,6 @@ class Messaging extends Component {
    }
 
    sendMessage = (text) => {
-        console.log(this.currentUser)
          this.currentUser.sendMessage({
              text,
              roomId: this.roomId
@@ -54,7 +51,6 @@ class Messaging extends Component {
 
 
    render() {
-      console.log("message list", this.state.messages)
          return (
              <div className="app">
                <MessageList

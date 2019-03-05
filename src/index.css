@@ -4,6 +4,7 @@ img{ max-width:100%;}
   border: 1px solid #c4c4c4;
   clear: both;
   overflow: hidden;
+  background-color: #dbdbdb;
 }
 
 .chat_img {

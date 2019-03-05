@@ -172,6 +172,7 @@ import {
   CarouselCaption
 } from 'reactstrap';
 import { Container, Button, Header, Icon, Modal, Form, Card, Image} from 'semantic-ui-react'
+import { withRouter } from "react-router-dom"
 
 
 class EventTop extends Component {
@@ -240,7 +241,6 @@ class EventTop extends Component {
 
   cards = (arr) => {
     let cards = arr.map((item)=> {
-      console.log("expected a single element", item)
       return (
         <div>
           <style>
@@ -263,15 +263,14 @@ class EventTop extends Component {
         </div>
       )
     })
-    console.log(cards)
     return cards
   }
 
 
   render() {
+    console.log(this.props)
     const { activeIndex } = this.state;
     const slides = this.iterater3(this.props.eventData).map((item) => {
-      console.log("item", item)
       return (
         <CarouselItem
           className="custom-tag"
@@ -287,7 +286,6 @@ class EventTop extends Component {
       );
     });
 
-    console.log("slides", slides)
 
     return (
       <div>
@@ -314,4 +312,4 @@ class EventTop extends Component {
   }
 }
 
-export default EventTop;
+export default withRouter(EventTop);

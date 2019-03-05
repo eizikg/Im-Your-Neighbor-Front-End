@@ -4,6 +4,7 @@ import Address from '../components/Address.js'
 import AuthAdapter from '../lib/AuthAdapter'
 import NewGroup from '../components/NewGroup.js'
 import {Container, Header, Icon, Grid, Button, Label} from 'semantic-ui-react'
+import { withRouter } from "react-router-dom"
 // import Messaging from './Messaging.js'
 
 class Groups extends Component {
@@ -242,4 +243,4 @@ render (){
 
 }
 
-export default Groups
+export default withRouter(Groups)

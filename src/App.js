@@ -9,6 +9,9 @@ import Groups from './containers/Groups.js'
 import { withRouter } from "react-router-dom"
 import Messaging from './containers/Messaging.js'
 import MainPageLayout from './containers/mainPageLayout.js'
+import { connect } from 'react-redux';
+import { simpleAction } from './actions/simpleAction';
+
 // import 'semantic-ui-css/semantic.min.css'
 // import Settings from './containers/settings.js'
 
@@ -19,8 +22,13 @@ class App extends React.Component {
     user: {},
     loggedIn: false,
     has_group: false,
-    group_data: []
+    group_data: [],
+    groups: []
   }
+
+  mapStateToProps = state => ({
+ ...state
+})
 
   LogIn = ({email, password}) => {
     AuthAdapter.checklogin(email, password)
@@ -29,7 +37,6 @@ class App extends React.Component {
       // console.log(resp.status);
       if (resp.status === 200){
         return json.then(data =>{
-            console.log("login fetch return:", data)
             this.setState({
             loggedIn: true,
             user: data.user
@@ -44,12 +51,10 @@ class App extends React.Component {
   }
 
   SignUp = ({first_name, last_name, email, password}) => {
-    console.log(first_name, last_name, email, password)
     AuthAdapter.createUser(first_name, last_name, email, password)
     .then(res => res.json())
     .catch(error => console.log(error))
     .then(data =>{
-        console.log("created the user", data)
         this.setState({
         loggedIn: true,
         user: data.user
@@ -70,6 +75,8 @@ class App extends React.Component {
     this.props.history.push(`/`)
   }
 
+
+//not used in new app
   joinEvent=({group_id, event_id}) => {
     AuthAdapter.joinEvent(group_id, this.state.user.id, event_id)
     .then(res => res.json())
@@ -80,7 +87,6 @@ class App extends React.Component {
   }
 
   JoinGroup = (group_id) => {
-    console.log(group_id)
     AuthAdapter.joinGroup(this.state.user.id, group_id)
     .then(res => res.json())
     .then(data => {
@@ -90,8 +96,6 @@ class App extends React.Component {
   }
 
   has_group = () => {
-    // console.log(this.state.user.id)
-    // console.log(this.props)
     fetch(`http://localhost:3000/api/v1/volounteers/${this.state.user.id}`, {
       method: "GET",
       headers: {"Content-Type": "application/json",
@@ -104,7 +108,8 @@ class App extends React.Component {
       let group = data.groups
       if (data.groups.length > 0 ){
         this.setState({
-          has_group: true
+          has_group: true,
+          groups: data.groups
         })
         this.props.history.push(`/members/${data.groups[0].id}`)
       }
@@ -125,11 +130,7 @@ class App extends React.Component {
          user: data,
          loggedIn: true
        })
-       // this.has_group()
      }
-     // else {
-     //   alert('incorrect username or password')
-     // }
    })
   }
 }
@@ -154,9 +155,8 @@ class App extends React.Component {
           <Route path='/signup'
               render={(props) => <SignUp {...props} SignUp={this.SignUp}/>}
               />
-            <Route path='/test'
+            <Route path='/test/:id'
                 render={(props) => <MainPageLayout {...props}
-                group={this.state.group_data}
                 user={this.state.user}
                 joinEvent={this.joinEvent}
                 logOut={this.LogOut}
@@ -172,7 +172,6 @@ class App extends React.Component {
             />
           <Route exact path='/members/:id'
               render={(props) => <MemberPage {...props}
-              group={this.state.group_data}
               user={this.state.user}
               joinEvent={this.joinEvent}
               logOut={this.LogOut}
@@ -186,4 +185,4 @@ class App extends React.Component {
 
 }
 
-export default App;
+export default withRouter(App);
