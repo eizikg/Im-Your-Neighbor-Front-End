@@ -77,16 +77,12 @@ class AuthAdapter {
  })
 }
 
- static newEvent(group_id, description){
-   console.log(group_id, description);
+ static newEvent(params){
+   console.log(params)
    return fetch(`http://localhost:3000/api/v1/events`, {
       method: "POST",
       headers: {"Content-Type": "application/json", Authorization: localStorage.token},
-      body: JSON.stringify({
-        group_id: group_id,
-        description: description,
-        active: true
-      })
+      body: JSON.stringify(params)
    })
  }
 
@@ -111,6 +107,15 @@ class AuthAdapter {
        name: name,
        description: description
      })
+   })
+ }
+
+ static updateEvent(params){
+   console.log(params)
+   return fetch(`http://localhost:3000/api/v1/events/${params.event_id}`, {
+     method: "PATCH",
+     headers: {"Content-Type": "application/json", Authorization: localStorage.token},
+     body: JSON.stringify(params)
    })
  }
 

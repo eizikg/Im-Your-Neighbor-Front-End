@@ -85,10 +85,13 @@ class LeftMenu extends Component {
     return (
       <div>
       <Menu id="menu" size="large" pointing vertical style={{ minHeight: 1000}}>
-
+      <Menu.Item >
+        <Button size='small' content='Log Out'/>
+        <Icon name='user' content='Profile' circular />
+      </Menu.Item>
       <Menu.Item>
       <Menu.Header>Your Groups</Menu.Header>
-
+       <br/>
       <Menu.Menu>
       {this.state.groups.map((group) => {
         return (
@@ -96,7 +99,6 @@ class LeftMenu extends Component {
         name={group.id}
         active={activeItem === group.id}
         onClick={this.handleGroupChange}
-        color='red'
         >
         <Menu.Header>{`${group.name}`}</Menu.Header>
         </Menu.Item>

@@ -194,23 +194,15 @@ render (){
   </Container>
   <hr/>
     <Container>
-    <div className="ui three column page grid">
       <hr/>
-    <div className="column" id="3">
       {!this.state.showGroups ? <Button color={'green'} onClick={this.showGroups}>All Groups</Button>: <div><Button color={'teal'} onClick={this.showGroups}>My Groups</Button><br/><br/><br/></div>}
       { this.state.showGroups ?
          this.state.groupData.map((g) =>
          <div><EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.id} user={this.props.user}/></div>)
            :null
          }
-       </div>
-   <div className="column" id="2">
      {this.byLocation() }
-   </div>
-   <div className="column" id="1">
      {this.props.user.groups && this.props.user.groups.length > 0 ? this.groupdiv(): null}
-   </div>
-     </div>
 
  </Container>
     </div>

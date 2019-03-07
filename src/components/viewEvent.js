@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Header, Image, Modal } from 'semantic-ui-react'
 import AuthAdapter from '../lib/AuthAdapter'
+// import { withRouter } from "react-router-dom"
 
 class ViewEvent extends Component{
 
@@ -11,6 +12,16 @@ class ViewEvent extends Component{
 
   fetchEvent(){
     AuthAdapter.fetchEvent(this.props.event_id)
+    .then(res => res.json())
+    .then(data => {
+      this.setState({
+        volounteers: data.volounteers
+      })
+    })
+  }
+
+  updateEvent(){
+    AuthAdapter.updateEvent({event_id: this.props.event_id, active: false, group_id: parseInt(this.props.group_id)})
     .then(res => res.json())
     .then(data => {
       this.setState({
@@ -41,7 +52,7 @@ class ViewEvent extends Component{
 
   render() {
     return (
-  <Modal trigger={<Button fluid basic color='blue' onClick={() => this.fetchEvent()}>view</Button>} centered={false}>
+  <Modal trigger={<Button fluid basic color='blue' onClick={() => this.fetchEvent()}>view</Button>} centered={true}>
     <Modal.Header></Modal.Header>
     <Modal.Content image>
       <Image wrapped size='medium' src='/images/avatar/large/rachel.png' />

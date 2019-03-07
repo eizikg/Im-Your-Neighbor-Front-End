@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Button, Header, Image, Modal, Checkbox } from 'semantic-ui-react'
+import { Button, Header, Image, Modal, Checkbox, Grid, List} from 'semantic-ui-react'
 import AuthAdapter from '/Users/flatironschool/Development/final-project/final-project-front-end-2/src/lib/AuthAdapter.js'
 
 class ViewEvent extends Component{
 
   state={
-    volounteers: []
+    volounteers: [],
+    active: true
   }
 
 
@@ -40,6 +41,16 @@ class ViewEvent extends Component{
   }
 
   render() {
+    let { eventData } = this.props
+    let volounteerList = this.state.volounteers.map((volounteer) => {
+      console.log(volounteer)
+      return (
+      <List.Item>
+        <List.Content>{`${volounteer.first_name} ${volounteer.last_name}`}</List.Content>
+      </List.Item>
+      )
+
+    })
 
     const inlineStyle = {
       modal : {
@@ -49,24 +60,19 @@ class ViewEvent extends Component{
     alignContent: 'center'
     }
   };
+  let { active } = this.state
     return (
-  <Modal trigger={<Button fluid basic color='blue' onClick={() => this.fetchEvent()}>view</Button>} centered={true} style={inlineStyle.modal}>
-    <Modal.Header></Modal.Header>
-    <Modal.Content image>
+  <Modal trigger={<Button fluid circular onClick={() => this.fetchEvent()}>Details</Button>} centered={true} style={inlineStyle.modal}>
+    <Modal.Header>{eventData.description}</Modal.Header>
+
+    <Modal.Content>
       <Modal.Description>
-        <Header>Default Profile Image test</Header>
-        <h2>Memebrs on this event</h2>
-        {this.state.volounteers.length > 0 ? this.state.volounteers.map((volounteer)=>
-          <div className="row">
-          <i className="user icon"></i>
-          <p>{`${volounteer.first_name} ${volounteer.last_name}`}</p>
-          </div>)
-: null}
-        <Button href="#" className={this.style()} onClick={(e) => this.joinEvent(this.props.event_id)}>I'm available to help</Button>
+        <Button href="#" className={this.style()} onClick={(e) => this.joinEvent(this.props.event_id)}>I'm attending</Button>
+        {this.state.volounteers.length > 0 ? <List ordered><List.Header>People on this event:</List.Header><br/>{volounteerList}</List> : null}
       </Modal.Description>
     </Modal.Content>
     <Modal.Content>
-      <Checkbox toggle />
+      <Checkbox toggle label={"Mark as inactive"} defaultChecked={active} onChange={() => this.props.updateEvent(this.props.event_id)}/>
       </Modal.Content>
   </Modal>
 )}

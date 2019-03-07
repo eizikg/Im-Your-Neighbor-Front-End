@@ -73,35 +73,22 @@ export class DesktopContainer extends Component {
 
     return (
       <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
-        <Visibility
-          once={false}
-          onBottomPassed={this.showFixedMenu}
-          onBottomPassedReverse={this.hideFixedMenu}
-        >
           <Grid>
           <Grid.Column width={3}>
             <LeftMenu members={this.props.members} eventData={this.props.eventData} groupData={this.props.groupData} user={this.props.user}/>
           </Grid.Column>
           <Grid.Column width={12}>
-          <Segment
-
-              textAlign='center'
-              style={{ minHeight: 50, padding: '1em 0em' }}
-              vertical
-            >
-
-          </Segment>
-          <EventTop
-            eventData={this.props.eventData}
-            user={this.props.user}
-            />
-          <Messaging/>
+            <Grid.Row width={8} style={{minHeight: '400px'}}>
+              <EventTop
+                eventData={this.props.eventData}
+                user={this.props.user}
+                />
+            </Grid.Row>
+            <Grid.Row>
+              <Messaging/>
+            </Grid.Row>
           </Grid.Column>
           </Grid>
-
-
-        </Visibility>
-
         {children}
       </Responsive>
     )
@@ -195,9 +182,10 @@ export class ResponsiveContainer extends Component {
     .then(data => {
       console.log(data)
       // console.log("fetch groups",this.state);
-      let newState = [...this.state.eventData, data]
+      let { eventData } = this.state
+      eventData.unshift(data)
       this.setState({
-        eventData: newState
+        eventData: eventData
       })
     })
   }

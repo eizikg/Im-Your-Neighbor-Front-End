@@ -1,10 +1,9 @@
 import PlacesAutocomplete from 'react-places-autocomplete';
 import {geocodeByAddress, geocodeByPlaceId, getLatLng} from 'react-places-autocomplete';
 import React, { Component } from 'react';
-import EachGroup from '../components/EachGroup.js'
 import { Input, Container} from 'semantic-ui-react'
 
-class Address extends Component {
+class EventAddress extends Component {
 
 state={
   address: ""
@@ -21,24 +20,23 @@ handleSelect = address => {
       console.log('Success', latLng)
       this.setState({
          address: address,
-         location: latLng
+         lat: latLng.lat,
+         lng: latLng.lng
       })
       console.log(this.state)
-      this.props.getVolounteersLocation(this.state)
+      this.props.submitAddress(this.state)
     })
     .catch(error => console.error('Error', error));
 };
 
 
 render() {
-  // console.log(this.searchOptions())
   return (
     <div>
     <PlacesAutocomplete
       value={this.state.address}
       onChange={this.handleChange}
       onSelect={this.handleSelect}
-      searchOptions={this.searchOptions}
     >
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
         <div>
@@ -79,4 +77,4 @@ render() {
 
 }
 
-export default Address;
+export default EventAddress;
