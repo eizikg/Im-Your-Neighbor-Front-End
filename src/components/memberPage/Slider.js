@@ -65,7 +65,7 @@ class Slider extends Component {
               <Card.Meta>
               </Card.Meta>
               <Card.Meta>
-                <Icon color='violet' name='map marker'/>
+                <Icon color='orange' name='map marker'/>
                 {item.address}
               </Card.Meta>
               <Card.Meta color='teal'>{item.volounteers_required ? <div><Icon color='violet' name='user circle outline'/>{item.volounteers_required} volounteer required</div>: null}</Card.Meta>

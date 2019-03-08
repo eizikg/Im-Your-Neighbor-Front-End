@@ -48,34 +48,34 @@ class LeftMenu extends Component {
   handleGroupChange = (e, {name}) => {
     console.log(name)
     this.setState({ activeItem: name })
-    this.props.history.push(`/test/${name}`)
+    this.props.history.push(`/members/${name}`)
   }
 
-  componentDidUpdate = (prevProps) => {
-    if (this.props.user !== prevProps.user){
-    fetch(`http://localhost:3000/api/v1/volounteers/${this.props.user.id}`, {
-      method: "GET",
-      headers: {"Content-Type": "application/json",
-      Authorization: localStorage.token}
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-      let param = this.props.match.params.id
-      console.log(param)
-      this.setState({
-        groups: data.groups,
-        activeItem: parseInt(param)
-      })
-    })
-  }
-  }
+  // componentDidUpdate = (prevProps) => {
+  //   if (this.props.user !== prevProps.user){
+  //   fetch(`http://localhost:3000/api/v1/volounteers/${this.props.user.id}`, {
+  //     method: "GET",
+  //     headers: {"Content-Type": "application/json",
+  //     Authorization: localStorage.token}
+  //   })
+  //   .then(res => res.json())
+  //   .then(data => {
+  //     console.log(data)
+  //     let param = this.props.match.params.id
+  //     console.log(param)
+  //     this.setState({
+  //       groups: data.groups,
+  //       activeItem: parseInt(param)
+  //     })
+  //   })
+  // }
+  // }
 
 
   componentDidMount = (prevProps) => {
     let param = this.props.match.params.id
       this.setState({
-        activeItem: param
+        activeItem: parseInt(param)
       })
   }
 
@@ -93,7 +93,7 @@ class LeftMenu extends Component {
       <Menu.Header>Your Groups</Menu.Header>
        <br/>
       <Menu.Menu>
-      {this.state.groups.map((group) => {
+      {this.props.user.groups ? this.props.user.groups.map((group) => {
         return (
         <Menu.Item
         name={group.id}
@@ -103,7 +103,7 @@ class LeftMenu extends Component {
         <Menu.Header>{`${group.name}`}</Menu.Header>
         </Menu.Item>
       )
-      })}
+    }) : null}
       </Menu.Menu>
       </Menu.Item>
 

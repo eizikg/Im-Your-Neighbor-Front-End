@@ -3,8 +3,9 @@ import EachGroup from '../components/EachGroup.js'
 import Address from '../components/Address.js'
 import AuthAdapter from '../lib/AuthAdapter'
 import NewGroup from '../components/NewGroup.js'
-import {Container, Header, Icon, Grid, Button, Label} from 'semantic-ui-react'
+import {Container, Header, Segment, Icon, Menu, Grid, Button, Label, Card} from 'semantic-ui-react'
 import { withRouter } from "react-router-dom"
+import { CSSTransitionGroup } from 'react-transition-group'
 // import Messaging from './Messaging.js'
 
 class Groups extends Component {
@@ -12,85 +13,26 @@ class Groups extends Component {
 state={
   groupData: [],
   byLocation: [],
-  showGroups: false,
   currentUserGroups: [],
-  hasAddress: false
+  hasAddress: false,
+  activeItem: "Near You"
 }
 
 componentDidMount(){
-  this.group()
-  AuthAdapter.fetchUser()
-  .then(res => res.json())
-  .then(data => {
-    console.log(data);
-    this.setState({
-      currentUserGroups: data.groups
-    })
-  })
-  // let user = this.props.user
-  // // console.log(this.props.user)
-  // if (user.lng){
-  //   // debugger
-  //   let location = `${user.lat},${user.lng}`
-  //   this.getVolounteersLocation({location: location})
-  // }
-}
-
-componentDidUpdate(prevProps){
-  if (this.state.currentUserGroups.length = 0){
-  AuthAdapter.fetchUser()
-  .then(res => res.json())
-  .then(data => {
-    console.log(data);
-    this.setState({
-      currentUserGroups: data.groups
-    })
-  })
-  // console.log(this.props.user)
-  // console.log(this.props, prevProps)
-  // if (this.state.byLocation.length === 0){
-  //   let user = this.props.user
-  //   // console.log(this.props.user.lng)
-  //   if (user.lng){
-  //     // debugger
-  //     let location = `${user.lat},${user.lng}`
-  //     // console.log(location)
-  //     this.getVolounteersLocation({location: location})
-    }
-  }
-
-
- showGroups=()=>{
-   let is_open = this.state.showGroups
-   this.setState({
-     showGroups: !is_open
-   })
- }
-
-
-group = ()=>{
   fetch('http://localhost:3000/api/v1/groups')
   .then(res => res.json())
   .then(data => {
-    console.log(data)
     this.setState({
       groupData: data
     })
   })
 }
 
-getGroupsLocation =({location}) => {
-  console.log(location)
-  AuthAdapter.getGroupsLocation(location, 30)
-  .then(res => res.json())
-  .then(console.log)
-}
-
-getVolounteersLocation=({location}) =>{
-  AuthAdapter.getGroupsLocation(location, 30, this.props.user)
+getVolounteersLocation=(params) =>{
+  AuthAdapter.getGroupsLocation(params)
   .then(res => res.json())
   .then(data => {
-    console.log(data)
+    console.log(this.props.user)
     if (data.length > 0){
     this.setState({
       byLocation: data,
@@ -113,122 +55,131 @@ newGroup = ({name, description}) => {
  })
 }
 
-userGroup=[]
-
-// groupdiv=(div) => {
-//   return div
-// }
-
-// currentUserGroups =()=> {
-//   AuthAdapter.fetchUser()
-//   .then(res => res.json())
-//   .then(data => {
-//     this.userGroup=data.groups
-//   })
-// }
-
- groupdiv=() => {
-   let div =  <div><Label color="orange">your groups</Label> {this.props.user.groups.map((g) => {
-     return(
-        <div>
-          <EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.first_name} user={this.props.user}/>
-        </div>
-        )
-      })
-    }
-    </div>
-    // console.log(div)
-    // console.log(this.props.user.groups.length)
-    return div
+ handleItemClick = (e, { name }) => {
+   this.setState({activeItem: name})
  }
 
 
-byLocation = () => {
-  if (this.state.byLocation.length > 0){
-     let div =  <div><Label color="blue">near you</Label> {this.state.byLocation.map((g) =>{
-      return (<div><EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.last_name} user={this.props.user} owner={true}/></div>)
-    })
+
+groups = () => {
+  let {activeItem} = this.state
+  switch(activeItem) {
+    case "All Groups":
+      let groups = this.state.groupData.map((g) =>{
+        return (<div><EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.last_name} user={this.props.user} owner={false}/></div>)
+      })
+      return(<Card.Group>{groups}</Card.Group>)
+    break;
+    case "Near You":
+      if (this.state.byLocation.length > 0){
+        let groups = this.state.byLocation.map((g) =>{
+          return (<div><EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.last_name} user={this.props.user} owner={false}/></div>)
+        })
+        return(<Card.Group>{groups}</Card.Group>)
+      }
+    break;
+    case "Your Groups":
+      if (this.props.user.groups.length > 0){
+        let groups = this.props.user.groups.map((g) =>{
+          return (<div><EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.last_name} user={this.props.user} owner={true}/></div>)
+        })
+        return(<Card.Group>{groups}</Card.Group>)
+      }
+    }
   }
-</div>
-    return div
-    // console.log(div)
-}
-  else{
-    return false
-  }
-}
 
 
 render (){
-  console.log(this.props);
-  // console.log(this.groupdiv());
-  // console.log("state for if the user has a group already", this.props.has_group)
+  const { activeItem } = this.state
+  console.log(this.props)
+
   if (this.state.hasAddress){
   return (
     <div>
-      <Button add onClick={() => this.props.logOut()}>log out</Button>
-    <Container>
-        <Header as='h2' icon>
-      <Icon name='users' circular />
-      <Header.Content>Groups</Header.Content>
-      <Header.Subheader>Join existiong groups or create your very own</Header.Subheader>
-      <br/>
-      <br/>
-      <br/>
-      <Container>
-        <Address
-          getVolounteersLocation={this.getVolounteersLocation}
-          getGroupsLocation={this.getGroupsLocation}
-          groupData={this.state.byLocation}
-          user={this.props.user}
+      <NewGroup user={this.props.user} createGroup={this.newGroup}/>
+        <CSSTransitionGroup
+          transitionName="groups"
+          transitionEnterTimeout={2000}
+          transitionLeave={false}
+          transitionAppear={true}
+          transitionAppearTimeout={2000}
+          >
+      <Grid centered>
+        <Grid.Row>
+          <Container style={{alignItems: 'center', justifyContent: 'center'}}>
+            <br/>
+            <Header icon style={{alignItems: 'center', justifyContent: 'center'}}>
+              <Icon name='users' circular />
+              <Header.Content content='groups'/>
+              <Header.Subheader content='Join existiong groups or create your very own'/>
+            </Header>
+            <Address
+              getVolounteersLocation={this.getVolounteersLocation}
+              getGroupsLocation={this.getGroupsLocation}
+              groupData={this.state.byLocation}
+              user={this.props.user}
+              />
+          </Container>
+        </Grid.Row>
+        <hr/>
+        <Grid.Row width={16}>
+          <Menu pointing secondary>
+          <Menu.Item name='Near You' active={activeItem === 'Near You'} onClick={this.handleItemClick} />
+          <Menu.Item
+            name='All Groups'
+            active={activeItem === 'All Groups'}
+            onClick={this.handleItemClick}
           />
-        <Label color='teal'>Type in your address and discover groups near you.</Label>
-      </Container>
-      <Grid.Row>
-        <NewGroup
-          user={this.props.user}
-          createGroup={this.newGroup}
+          <Menu.Item
+            name='Your Groups'
+            active={activeItem === 'Your Groups'}
+            onClick={this.handleItemClick}
           />
-      </Grid.Row>
-    </Header>
-  </Container>
-  <hr/>
-    <Container>
-      <hr/>
-      {!this.state.showGroups ? <Button color={'green'} onClick={this.showGroups}>All Groups</Button>: <div><Button color={'teal'} onClick={this.showGroups}>My Groups</Button><br/><br/><br/></div>}
-      { this.state.showGroups ?
-         this.state.groupData.map((g) =>
-         <div><EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.id} user={this.props.user}/></div>)
-           :null
-         }
-     {this.byLocation() }
-     {this.props.user.groups && this.props.user.groups.length > 0 ? this.groupdiv(): null}
-
- </Container>
+        </Menu>
+        </Grid.Row>
+        <Grid.Row width={10}>
+          {this.groups() }
+        </Grid.Row>
+      </Grid>
+    </CSSTransitionGroup>
     </div>
-  )}
+    )}
   else {
     return (
-      <Container>
-      <Header as='h2' icon>
-    <Icon name='users' circular />
-    <Header.Content>Groups</Header.Content>
-    <Header.Subheader>Join existiong groups or create your very own</Header.Subheader>
-    <br/>
-    <br/>
-    <br/>
-    <Header>Start by providing your address</Header>
-    <Container>
-      <Address
-        getVolounteersLocation={this.getVolounteersLocation}
-        getGroupsLocation={this.getGroupsLocation}
-        groupData={this.state.byLocation}
-        user={this.props.user}
-        />
-      <Label color='teal'>Type in your address and discover groups near you.</Label>
-    </Container>
-  </Header>
-    </Container>
+      <CSSTransitionGroup
+        transitionName="groups"
+        transitionLeave={true}
+        transitionAppear={false}
+        transitionEnter={false}
+        transitionLeaveTimeout={1000}
+        >
+      <Grid id='group' centered >
+        <style>
+          {
+           `#group{
+             align-items: center;
+             justify-content: center;
+           }
+           `
+          }
+        </style>
+        <Container as='h1' style={{alignItems: 'center', justifyContent: 'center'}}>
+          <br/>
+        <Header icon style={{alignItems: 'center', justifyContent: 'center'}}>
+        <Icon name='users' circular />
+        <Header.Content content='groups'/>
+        <Header.Subheader content='Join existiong groups or create your very own'/>
+        </Header>
+          <Address
+            getVolounteersLocation={this.getVolounteersLocation}
+            getGroupsLocation={this.getGroupsLocation}
+            groupData={this.state.byLocation}
+            user={this.props.user}
+            />
+            <Label color='teal' content='Type in your address and discover groups near you.' />
+        </Container>
+        </Grid>
+      </CSSTransitionGroup>
     )
   }
 }

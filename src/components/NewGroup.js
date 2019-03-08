@@ -12,7 +12,10 @@ class newGroup extends Component {
     descripton: ""
   }
 
-  handleOpen = () => this.setState({ modalOpen: true })
+  handleOpen = () => {
+    this.setState({ modalOpen: true })
+    console.log("open")
+  }
 
   handleClose = () => this.setState({ modalOpen: false })
 
@@ -30,33 +33,13 @@ class newGroup extends Component {
      this.setState({ modalOpen: false, name: "", descripton: "" })
   }
 
-
-// render(){
-//   console.log(this.props)
-//   return (
-//   <Form>
-//     <Form.Field>
-//       <label>Name</label>
-//       <input placeholder='give your group a name' name='name' value={this.state.name} onChange={this.changeHandler}/>
-//     </Form.Field>
-//     <Form.Field>
-//       <label>description</label>
-//       <input placeholder='what is your focus?' name='description' value={this.state.description} onChange={this.changeHandler} />
-//     </Form.Field>
-//      <Button type='submit' onClick={(e) => this.createGroup()}>Submit</Button>
-//   </Form>
-// )
-// }
-// }
-
 render(){
 return (
   <Modal
-  trigger={<Button className="big" color='teal' onClick={this.handleOpen}>Create a New Group</Button>}
+  trigger={<div><br/><br/><Button circular size='big' onClick={this.handleOpen} inverted icon='plus' color='orange' content='Create new group'></Button></div>}
   centered={true}
   open={this.state.modalOpen}
   onClose={this.handleClose}
-  basic
   size='small'
   >
 <Modal.Header>create a new group</Modal.Header>
@@ -71,12 +54,12 @@ return (
         <label>Description</label>
         <input placeholder='Description' name='descripton' value={this.state.description} onChange={(e) => this.changeHandler(e)}/>
       </Form.Field>
-      <Label type='submit' onClick={this.handleClose}>Cancel</Label>
-      <Button color='teal' btn btn-primary type='submit' onClick={this.createGroup}>Submit</Button>
+      <Button.Group>
+        <Button type='submit' onClick={this.handleClose}>Cancel</Button>
+        <Button.Or />
+        <Button color='teal' btn btn-primary type='submit' onClick={this.createGroup}>Submit</Button>
+      </Button.Group>
   </Form>
-  <Modal.Description>
-      <Header>Default Profile Image</Header>
-  </Modal.Description>
 </Modal.Content>
 </Modal>
 )}

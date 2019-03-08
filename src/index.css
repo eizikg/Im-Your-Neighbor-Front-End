@@ -71,6 +71,34 @@ img{ max-width:100%;}
   transition: opacity 500ms ease-in;
 }
 
+.groups-enter.groups-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.groups-enter {
+  opacity: 0.01;
+}
+
+.groups-enter.groups-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.groups-appear.groups-appear-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.groups-appear {
+  opacity: 0.01;
+}
+
+.groups-appear.groups-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
 /* .example-leave {
   opacity: 1;
 }
@@ -172,7 +200,7 @@ a{
   	box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
   } */
 
-  @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+  /* @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
 
 .banner-sec{background:url(https://static.pexels.com/photos/33972/pexels-photo.jpg)  no-repeat left bottom; background-size:cover; min-height:500px; border-radius: 0 10px 10px 0; padding:0;}
 .login-sec{padding: 50px 30px; position:relative;}
@@ -195,4 +223,4 @@ a{
     .MultiCarousel .leftLst { left:0; }
     .MultiCarousel .rightLst { right:0; }
 
-        .MultiCarousel .leftLst.over, .MultiCarousel .rightLst.over { pointer-events: none; background:#ccc; }
+        .MultiCarousel .leftLst.over, .MultiCarousel .rightLst.over { pointer-events: none; background:#ccc; } */

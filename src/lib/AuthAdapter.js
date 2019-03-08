@@ -67,7 +67,7 @@ class AuthAdapter {
  static fetchGroup(group_id){
    console.log("parmas for fetching group data" ,group_id)
    return fetch(`http://localhost:3000/api/v1/groups/${group_id}`, {
-      headers: {"Content-Type": "application/json", Authorization: localStorage.token}
+
     })
  }
 
@@ -86,15 +86,19 @@ class AuthAdapter {
    })
  }
 
- static getVolounteersLocation(location, range, user){
+ static getVolounteersLocation(params){
    return fetch('http://localhost:3000/api/v1/location/volounteers', {
-     headers: {GeoLocation: [[location.lat, location.lng]], Range:range, User:user.id}
+     method: "PATCH",
+     headers: {"Content-Type": "application/json", Authorization: localStorage.token},
+     body: JSON.stringify(params)
    })
  }
 
- static getGroupsLocation(location, range, user){
+ static getGroupsLocation(params){
    return fetch('http://localhost:3000/api/v1/location/groups', {
-     headers: {GeoLocation: [[location.lat, location.lng]], Range:range, User:user.id}
+     method: "PATCH",
+     headers: {"Content-Type": "application/json", Authorization: localStorage.token},
+     body: JSON.stringify(params)
    })
  }
 

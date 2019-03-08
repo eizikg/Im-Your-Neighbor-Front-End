@@ -43,6 +43,7 @@ render() {
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
         <div>
           <Input
+            icon={{ name: 'search', circular: true, link: true }}
             {...getInputProps({
               placeholder: 'Type your address ...',
               className: 'location-search-input',

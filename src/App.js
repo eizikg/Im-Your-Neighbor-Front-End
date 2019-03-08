@@ -26,9 +26,6 @@ class App extends React.Component {
     groups: []
   }
 
-  mapStateToProps = state => ({
- ...state
-})
 
   LogIn = ({email, password}) => {
     AuthAdapter.checklogin(email, password)
@@ -171,7 +168,7 @@ class App extends React.Component {
             />}
             />
           <Route exact path='/members/:id'
-              render={(props) => <MemberPage {...props}
+              render={(props) => <MainPageLayout {...props}
               user={this.state.user}
               joinEvent={this.joinEvent}
               logOut={this.LogOut}

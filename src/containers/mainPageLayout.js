@@ -62,7 +62,7 @@ export class DesktopContainer extends Component {
   state = {}
 
   render() {
-
+   console.log("desktop container props", this.props)
     const { children } = this.props
     const { fixed } = this.state
     const getWidth = () => {
@@ -116,7 +116,7 @@ export class MobileContainer extends Component {
 
     return (
       <Responsive
-        as={Sidebar.Pushable}
+          as={Sidebar.Pushable}
         getWidth={getWidth}
         maxWidth={Responsive.onlyMobile.maxWidth}
       >
@@ -139,40 +139,52 @@ export class ResponsiveContainer extends Component {
   state={
     eventData: [],
     members: [],
-    groupData: []
+    groupData: [],
+    user: {}
   }
 
-  componentDidUpdate(prevProps){
-    if (this.props.match.params.id !== prevProps.match.params.id){
-      console.log(this.props)
-      AuthAdapter.fetchGroup(this.props.match.params.id)
-      .then(res => res.json())
-      .then(data =>{
-        console.log("fetching the groups", data[0].group_volounteers)
-      this.setState({
-        eventData: data[0].events,
-        members: data[0].volounteers,
-        group_info: data[0]
-      })
-    })
-   }
-  }
-
+  // componentDidMount(){
+  //     AuthAdapter.fetchGroup(this.props.match.params.id)
+  //     .then(res => res.json())
+  //     .then(data =>{
+  //       console.log("fetching the groups", data)
+  //     this.setState({
+  //       eventData: data[0].events,
+  //       members: data[0].volounteers,
+  //       groupData: data[0],
+  //       params: this.props.match.params.id
+  //     })
+  //   })
+  // }
   componentDidMount(prevProps){
-    // setTimeout(() => { this.setState({ loading: false}); }, 3000);
-    if (this.props.user){
-      console.log(this.props)
+     AuthAdapter.fetchGroup(this.props.match.params.id)
+     .then(res => res.json())
+     .then(data => {
+       this.setState({
+         user: this.props.user,
+         params: this.props.match,
+         eventData: data[0].events,
+         members: data[0].volounteers,
+         groupData: data[0]
+       })
+     })
+   }
+
+
+   componentDidUpdate(prevProps){
+    if (this.props.user !== prevProps.user || prevProps.match !== this.props.match){
       AuthAdapter.fetchGroup(this.props.match.params.id)
       .then(res => res.json())
-      .then(data =>{
-        console.log("fetching the groups", data)
-      this.setState({
-        eventData: data[0].events,
-        members: data[0].volounteers,
-        groupData: data[0]
+      .then(data => {
+        this.setState({
+          user: this.props.user,
+          params: this.props.match,
+          eventData: data[0].events,
+          members: data[0].volounteers,
+          groupData: data[0]
+        })
       })
-    })
-   }
+    }
   }
 
   newEvent = (description) => {
@@ -191,9 +203,10 @@ export class ResponsiveContainer extends Component {
   }
 
   render (){
+    console.log("responsive state", this.state)
   return (
   <div>
-    <DesktopContainer members={this.state.members} eventData={this.state.eventData} groupData={this.state.groupData} loggedIn={this.props.loggedIn} history={this.props.history} LogOut={this.props.LogOut} HasGroup={this.props.HasGroup} user={this.props.user}>{this.props.children}</DesktopContainer>
+    <DesktopContainer members={this.state.members} params={this.state.params} eventData={this.state.eventData} groupData={this.state.groupData} loggedIn={this.props.loggedIn} history={this.props.history} LogOut={this.props.LogOut} HasGroup={this.props.HasGroup} user={this.state.user}>{this.props.children}</DesktopContainer>
     <MobileContainer members={this.state.members} eventData={this.state.eventData} groupData={this.state.groupData}loggedIn={this.props.loggedIn} history={this.props.history} LogOut={this.props.LogOut} HasGroup={this.props.HasGroup}></MobileContainer>
   </div>
 )}
