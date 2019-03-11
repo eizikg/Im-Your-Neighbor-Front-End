@@ -29,8 +29,7 @@ class newGroup extends Component {
    createGroup = (e) => {
      console.log("create group")
      this.props.createGroup({name: this.state.name, descripton: this.state.description})
-     // this.handleClose()
-     this.setState({ modalOpen: false, name: "", descripton: "" })
+    this.setState({ modalOpen: false, name: "", descripton: "" })
   }
 
 render(){
@@ -46,10 +45,6 @@ return (
 <Modal.Content image>
   <Form>
     <h3>New Group</h3>
-      <Form.Field>
-        <label>Neighborehood</label>
-        <input placeholder='city or neighborhood' name='name' value={this.state.name} onChange={(e) => this.changeHandler(e)}/>
-      </Form.Field>
       <Form.Field>
         <label>Description</label>
         <input placeholder='Description' name='descripton' value={this.state.description} onChange={(e) => this.changeHandler(e)}/>

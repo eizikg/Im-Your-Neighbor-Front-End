@@ -3,7 +3,7 @@ import EachGroup from '../components/EachGroup.js'
 import Address from '../components/Address.js'
 import AuthAdapter from '../lib/AuthAdapter'
 import NewGroup from '../components/NewGroup.js'
-import {Container, Header, Segment, Icon, Menu, Grid, Button, Label, Card} from 'semantic-ui-react'
+import {Container, Input, Header, Segment, Icon, Menu, Grid, Button, Label, Card} from 'semantic-ui-react'
 import { withRouter } from "react-router-dom"
 import { CSSTransitionGroup } from 'react-transition-group'
 // import Messaging from './Messaging.js'
@@ -15,7 +15,8 @@ state={
   byLocation: [],
   currentUserGroups: [],
   hasAddress: false,
-  activeItem: "Near You"
+  activeItem: "Near You",
+  filtered: []
 }
 
 componentDidMount(){
@@ -39,12 +40,31 @@ getVolounteersLocation=(params) =>{
       hasAddress: true
     })
   }
+  else {
+    this.setState({
+      hasAddress: true
+    })
+  }
   })
+}
+
+filter = (e) => {
+  let { groupData } = this.state
+  let filteredAraay = groupData.filter((elm) => {
+    return elm.name.includes(e.target.value)
+  })
+  this.setState({filtered: filteredAraay, activeItem: "filtered"})
 }
 
 newGroup = ({name, description}) => {
   AuthAdapter.createGroup(name, description, this.props.user)
- .then(res => res.json())
+ .then(res => {
+   if (!res.ok){
+     console.log(res.ok)
+     throw Error(res.statusText)
+   }
+   return res.json()
+  })
  .then(data => {
    // console.log("new group created", data)
    let newState= [...this.state.groupData, data]
@@ -53,6 +73,7 @@ newGroup = ({name, description}) => {
    })
    this.props.history.push(`/members/${data.id}`)
  })
+ .catch(console.error)
 }
 
  handleItemClick = (e, { name }) => {
@@ -63,6 +84,7 @@ newGroup = ({name, description}) => {
 
 groups = () => {
   let {activeItem} = this.state
+  console.log(activeItem)
   switch(activeItem) {
     case "All Groups":
       let groups = this.state.groupData.map((g) =>{
@@ -70,12 +92,21 @@ groups = () => {
       })
       return(<Card.Group>{groups}</Card.Group>)
     break;
+    case "filtered":
+      let filteredAraay = this.state.filtered.map((g) =>{
+        return (<div><EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.last_name} user={this.props.user} owner={false}/></div>)
+      })
+      return(<Card.Group>{filteredAraay}</Card.Group>)
+    break;
     case "Near You":
       if (this.state.byLocation.length > 0){
         let groups = this.state.byLocation.map((g) =>{
           return (<div><EachGroup JoinGroup={this.props.JoinGroup} groupData={g} key={g.last_name} user={this.props.user} owner={false}/></div>)
         })
         return(<Card.Group>{groups}</Card.Group>)
+      }
+      else {
+        return <span>no results found</span>
       }
     break;
     case "Your Groups":
@@ -113,25 +144,24 @@ render (){
               <Header.Content content='groups'/>
               <Header.Subheader content='Join existiong groups or create your very own'/>
             </Header>
-            <Address
-              getVolounteersLocation={this.getVolounteersLocation}
-              getGroupsLocation={this.getGroupsLocation}
-              groupData={this.state.byLocation}
-              user={this.props.user}
-              />
+            {activeItem == 'All Groups' || activeItem == 'filtered' ? <Grid.Row><Input onChange={this.filter} placeholder='Search groups...' /></Grid.Row>: null}
           </Container>
         </Grid.Row>
         <hr/>
         <Grid.Row width={16}>
           <Menu pointing secondary>
-          <Menu.Item name='Near You' active={activeItem === 'Near You'} onClick={this.handleItemClick} />
+          <Menu.Item icon='map marker alternate' color='orange' name='Near You' active={activeItem === 'Near You'} onClick={this.handleItemClick} />
           <Menu.Item
             name='All Groups'
-            active={activeItem === 'All Groups'}
-            onClick={this.handleItemClick}
-          />
+            color='green'
+            icon='search plus'
+            active={activeItem === 'All Groups' || activeItem === 'filtered'}
+            onClick={this.handleItemClick}>
+          </Menu.Item>
           <Menu.Item
             name='Your Groups'
+            color='yellow'
+            icon='users'
             active={activeItem === 'Your Groups'}
             onClick={this.handleItemClick}
           />

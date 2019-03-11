@@ -1,36 +1,37 @@
 import React, { Component } from 'react';
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+import { Container } from 'semantic-ui-react'
+
+TimeAgo.addLocale(en)
 
 class MessageList extends Component {
 
   render() {
-        // return (
-            // <ul className="message-list">
-            //     {this.props.messages.map((message, index) => {
-            //         return (
-            //           <li  key={message.id} className="message">
-            //             <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"/> </div>
-            //             <div>{message.senderId}</div>
-            //             <div>{message.text}</div>
-            //           </li>
-            //         )
-            //     })}
-            // </ul>
-        //
-        //
-        // )
+        const timeAgo = new TimeAgo('en-US')
         return (
-          <div class="messaging">
-            <div class="inbox_msg">
-              <div class="mesgs">
-                <div class="msg_history">
+          <Container textAlign='justified'>
+          <div className="messaging">
+            <style>{
+                `
+                .mesgs{
+  	              background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+              }
+              `
+            }</style>
+            <div className="inbox_msg">
+              <div className="mesgs">
+                <div className="msg_history">
                 {this.props.messages.map((message, index) => {
+                  // console.log(message)
                     return (
-                      <div class="incoming_msg">
-                        <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"/> </div>
-                          <div class="received_msg">
-                            <div class="received_withd_msg">
-                            <p>{message.text}</p>
-                            <span class="time_date"> 11:01 AM    |    June 9</span></div>
+                      <div className="incoming_msg">
+                        <div className="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"/> </div>
+                          <div className="received_msg">
+                              <div className="received_withd_msg">
+                                <span className="time_date">{message.sender.name}</span>
+                            <p>{message.text}<span class="time_date">{timeAgo.format(new Date(message.createdAt))}</span></p>
+                            </div>
                             </div>
                           </div>
                     )
@@ -39,6 +40,7 @@ class MessageList extends Component {
               </div>
             </div>
           </div>
+        </Container>
         )
     }
 

@@ -75,18 +75,20 @@ export class DesktopContainer extends Component {
       <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
           <Grid>
           <Grid.Column width={3}>
-            <LeftMenu members={this.props.members} eventData={this.props.eventData} groupData={this.props.groupData} user={this.props.user}/>
+            <LeftMenu members={this.props.members} eventData={this.props.eventData} groupData={this.props.groupData} user={this.props.user} logOut={this.props.logOut}/>
           </Grid.Column>
-          <Grid.Column width={12}>
+          <Grid.Column centered width={12}>
             <Grid.Row width={8} style={{minHeight: '400px'}}>
               <EventTop
                 eventData={this.props.eventData}
                 user={this.props.user}
                 />
             </Grid.Row>
-            <Grid.Row>
-              <Messaging/>
+            <Grid.Column centered width={12}>
+            <Grid.Row width={8}>
+              <Messaging newJoin={this.props.newJoin} groupData={this.props.groupData} user={this.props.user}/>
             </Grid.Row>
+          </Grid.Column>
           </Grid.Column>
           </Grid>
         {children}
@@ -126,7 +128,7 @@ export class MobileContainer extends Component {
             style={{ minHeight: 350, padding: '1em 0em' }}
             vertical
           >
-            <HomepageHeading mobile />
+          <Header>Sorry this website does not support mobile devices. Please vist using a computer. Thanks</Header>
           </Segment>
           {children}
       </Responsive>
@@ -156,7 +158,9 @@ export class ResponsiveContainer extends Component {
   //     })
   //   })
   // }
-  componentDidMount(prevProps){
+  componentDidMount(){
+    console.log("props inresponsive for mount", this.props.user)
+    if (this.props.user) {
      AuthAdapter.fetchGroup(this.props.match.params.id)
      .then(res => res.json())
      .then(data => {
@@ -169,9 +173,11 @@ export class ResponsiveContainer extends Component {
        })
      })
    }
+   }
 
 
    componentDidUpdate(prevProps){
+     console.log("props inresponsive for update", this.props)
     if (this.props.user !== prevProps.user || prevProps.match !== this.props.match){
       AuthAdapter.fetchGroup(this.props.match.params.id)
       .then(res => res.json())
@@ -206,7 +212,7 @@ export class ResponsiveContainer extends Component {
     console.log("responsive state", this.state)
   return (
   <div>
-    <DesktopContainer members={this.state.members} params={this.state.params} eventData={this.state.eventData} groupData={this.state.groupData} loggedIn={this.props.loggedIn} history={this.props.history} LogOut={this.props.LogOut} HasGroup={this.props.HasGroup} user={this.state.user}>{this.props.children}</DesktopContainer>
+    <DesktopContainer members={this.state.members} newJoin={this.props.newJoin} params={this.state.params} eventData={this.state.eventData} groupData={this.state.groupData} loggedIn={this.props.loggedIn} history={this.props.history} logOut={this.props.logOut} HasGroup={this.props.HasGroup} user={this.state.user}>{this.props.children}</DesktopContainer>
     <MobileContainer members={this.state.members} eventData={this.state.eventData} groupData={this.state.groupData}loggedIn={this.props.loggedIn} history={this.props.history} LogOut={this.props.LogOut} HasGroup={this.props.HasGroup}></MobileContainer>
   </div>
 )}
@@ -231,9 +237,10 @@ class MainPageLayout extends Component{
   loggedIn={this.props.loggedIn}
   history={this.props.history}
   match={this.props.match}
-  LogOut={this.props.LogOut}
+  logOut={this.props.logOut}
   HasGroup={this.props.HasGroup}
   user={this.props.user}
+  newJoin={this.props.newJoin}
   />
 )}
 }

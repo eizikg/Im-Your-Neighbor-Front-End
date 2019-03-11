@@ -23,7 +23,8 @@ class App extends React.Component {
     loggedIn: false,
     has_group: false,
     group_data: [],
-    groups: []
+    groups: [],
+    newJoin: false
   }
 
 
@@ -43,15 +44,20 @@ class App extends React.Component {
         }
         )
       }
-      else json.then(alert("invalid username or password"))
+      else json.then(alert)
     })
   }
 
   SignUp = ({first_name, last_name, email, password}) => {
     AuthAdapter.createUser(first_name, last_name, email, password)
-    .then(res => res.json())
-    .catch(error => console.log(error))
+    .then(res => {
+      if (!res.ok){
+        throw Error(res.message)
+      }
+      return res.json()
+    })
     .then(data =>{
+       console.log(data)
         this.setState({
         loggedIn: true,
         user: data.user
@@ -60,6 +66,10 @@ class App extends React.Component {
       this.has_group()
     }
     )
+    .catch(error => {
+      // alert(error)
+      console.error(error)
+    })
   }
 
 
@@ -88,6 +98,7 @@ class App extends React.Component {
     .then(res => res.json())
     .then(data => {
       console.log("joined the group", data)
+      this.setState({newJoin: data.new_join})
       this.props.history.push(`/members/${group_id}`)
     })
   }
@@ -172,6 +183,7 @@ class App extends React.Component {
               user={this.state.user}
               joinEvent={this.joinEvent}
               logOut={this.LogOut}
+              newJoin={this.state.newJoin}
               />}
               />
         </Switch>

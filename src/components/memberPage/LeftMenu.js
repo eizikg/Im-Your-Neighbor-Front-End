@@ -14,6 +14,7 @@ import {
   Sidebar,
   Ref,
   Visibility,
+  Dropdown
 } from 'semantic-ui-react'
 import React, { Component } from 'react';
 import { withRouter , Redirect} from "react-router";
@@ -23,55 +24,15 @@ class LeftMenu extends Component {
 
   state={
     groups: [],
-    activeItem: ""
+    activeItem: "",
+    showGroups: false
   }
 
-
-  // params = () => {
-  //   return this.props.match.params.id
-  // }
-
-  // componentDidMount(){
-  //   fetch(`http://localhost:3000/api/v1/volounteers/${this.props.user.id}`, {
-  //     method: "GET",
-  //     headers: {"Content-Type": "application/json",
-  //     Authorization: localStorage.token}
-  //   })
-  //   .then(res => res.json())
-  //   .then(data => {
-  //     console.log(data)
-  //     this.setState({
-  //       groups: data.groups
-  //     })
-  //   })
-  // }
   handleGroupChange = (e, {name}) => {
     console.log(name)
     this.setState({ activeItem: name })
     this.props.history.push(`/members/${name}`)
   }
-
-  // componentDidUpdate = (prevProps) => {
-  //   if (this.props.user !== prevProps.user){
-  //   fetch(`http://localhost:3000/api/v1/volounteers/${this.props.user.id}`, {
-  //     method: "GET",
-  //     headers: {"Content-Type": "application/json",
-  //     Authorization: localStorage.token}
-  //   })
-  //   .then(res => res.json())
-  //   .then(data => {
-  //     console.log(data)
-  //     let param = this.props.match.params.id
-  //     console.log(param)
-  //     this.setState({
-  //       groups: data.groups,
-  //       activeItem: parseInt(param)
-  //     })
-  //   })
-  // }
-  // }
-
-
   componentDidMount = (prevProps) => {
     let param = this.props.match.params.id
       this.setState({
@@ -80,42 +41,42 @@ class LeftMenu extends Component {
   }
 
   render() {
+    let groups = this.props.user.groups ? this.props.user.groups.map((group) => {
+      return (
+      <Menu.Item
+      name={group.id}
+      active={activeItem === group.id}
+      onClick={this.handleGroupChange}
+      >
+      <Menu.Header>{`${group.name}`}</Menu.Header>
+      </Menu.Item>
+    )
+  }) : null
     const { activeItem } = this.state || {}
     console.log(this.props.members)
     return (
       <div>
       <Menu id="menu" size="large" pointing vertical style={{ minHeight: 1000}}>
       <Menu.Item >
-        <Button size='small' content='Log Out'/>
-        <Icon name='user' content='Profile' circular />
+        <Button size='small' content='Log Out' onClick={this.props.logOut}/><br/>
+        <Dropdown inline floating icon='angle down' text='Groups'>
+          <Dropdown.Menu>
+          <Dropdown.Item  icon='setting' text="Your groups" onClick={() => this.setState({showGroups: !this.state.showGroups})}/>
+          <Dropdown.Item  icon='search plus' text="Explore more groups" onClick={() => this.props.history.push(`/groups`)}/>
+          </Dropdown.Menu>
+        </Dropdown>
       </Menu.Item>
-      <Menu.Item>
-      <Menu.Header>Your Groups</Menu.Header>
        <br/>
-      <Menu.Menu>
-      {this.props.user.groups ? this.props.user.groups.map((group) => {
-        return (
-        <Menu.Item
-        name={group.id}
-        active={activeItem === group.id}
-        onClick={this.handleGroupChange}
-        >
-        <Menu.Header>{`${group.name}`}</Menu.Header>
-        </Menu.Item>
-      )
-    }) : null}
-      </Menu.Menu>
-      </Menu.Item>
+        { this.state.showGroups ?
+     <Menu.Item>
+       <Menu.Header>Your Groups</Menu.Header>
+       <Menu.Menu>{groups}</Menu.Menu>
+     </Menu.Item> : null
+     }
 
 
       <Menu.Item>
 
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <hr/>
       <Menu.Header size="huge">Members    <Icon name='users'/></Menu.Header>
 
       <Menu.Menu>
@@ -135,60 +96,13 @@ class LeftMenu extends Component {
 
 
 
-      <Menu.Item>
-      <Menu.Header>Support</Menu.Header>
-
-      <Menu.Menu>
-      <Menu.Item
-      name='email'
-      active={this.activeItem === 'email'}
-      onClick={this.handleItemClick}
-      >
-
-
-          Veronika Ossi
-          <Icon name='user circle'></Icon>
-
-
-      </Menu.Item>
-
-      <Menu.Item
-      name='faq'
-      color='red'
-      active={this.activeItem === 'faq'}
-      onClick={this.handleItemClick}
-      >
-      FAQs
-      </Menu.Item>
-      </Menu.Menu>
-      </Menu.Item>
+      
       </Menu>
       </div>
     );
   }
 
 }
-
-
-
-// <Menu.item>
-// <Menu.Header>Members</Menu.Header>
-// <Menu.Menu>
-//   {this.props.members.map((member) => {
-//     return (
-//          <Menu.item
-//            name={member.id}
-//            active={activeItem === member.id}
-//            onClick={this.handleGroupChange}
-//            color='red'
-//            >
-//           {`${member.first_name} ${member.last_name}`}
-//           <Icon name='user circle'></Icon>
-//           </Menu.item>
-//   )
-// })}
-// </Menu.Menu>
-// </Menu.item>
 
 
 export default withRouter(LeftMenu)

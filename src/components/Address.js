@@ -15,13 +15,18 @@ state={
 };
 
 handleSelect = address => {
+  let neighborhood
   geocodeByAddress(address)
-    .then(results => getLatLng(results[0]))
+    .then(results => {
+      neighborhood = results[0].address_components[2].short_name
+      return getLatLng(results[0])
+    })
     .then(latLng => {
       console.log('Success', latLng)
       this.setState({
          address: address,
-         location: latLng
+         location: latLng,
+         neighborhood: neighborhood
       })
       console.log(this.state)
       this.props.getVolounteersLocation(this.state)

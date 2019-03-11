@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Form, Input, Button, Icon} from 'semantic-ui-react'
 
 class SendMessageForm extends Component {
 
@@ -25,17 +26,24 @@ class SendMessageForm extends Component {
 
    render() {
          return (
-             <form
-                 onSubmit={this.handleSubmit}
-                 className="send-message-form">
-                 <input
-                     onChange={this.handleChange}
-                     value={this.state.message}
-                     placeholder="Type your message and hit ENTER"
-                     type="text" />
-             </form>
+           <div class="type_msg">
+            <div class="input_msg_write">
+              <Input style={{width: 550}} value={this.state.message} className="write_msg" onChange={this.handleChange} icon={<Icon color='blue' onClick={this.handleSubmit} name='send' inverted circular link />} placeholder="Type a message" />
+              </div>
+          </div>
          )
      }
+
+     // <Form
+     //     onSubmit={this.handleSubmit}
+     //     className="send-message-form">
+     //     <Input
+     //         size='large'
+     //         onChange={this.handleChange}
+     //         value={this.state.message}
+     //         placeholder="Type your message and hit ENTER"
+     //         type="text" />
+         // </Form>
 
 }
 

@@ -15,7 +15,7 @@ img{ max-width:100%;}
 
 .incoming_msg_img {
   display: inline-block;
-  width: 6%;
+  width: 3%;
 }
 .received_msg {
   display: inline-block;
@@ -30,13 +30,38 @@ img{ max-width:100%;}
 }
  .received_withd_msg p {
   background: #ffffff none repeat scroll 0 0;
-  border-radius: 3px;
+  border-radius: 13px;
   color: #000000;
   font-size: 14px;
   margin: 0;
   padding: 5px 10px 5px 12px;
   width: 100%;
 }
+
+.input_msg_write input {
+  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+  border: medium none;
+  color: #4c4c4c;
+  font-size: 15px;
+  min-height: 48px;
+  width: 100%;
+}
+
+.type_msg {border-top: 1px solid #c4c4c4;position: relative;}
+.msg_send_btn {
+  background: #05728f none repeat scroll 0 0;
+  border: medium none;
+  border-radius: 80%;
+  color: #fff;
+  cursor: pointer;
+  font-size: 17px;
+  height: 33px;
+  position: absolute;
+  right: 0;
+  top: 11px;
+  width: 100%;
+}
+
 .time_date {
   color: #747474;
   display: block;
@@ -47,11 +72,11 @@ img{ max-width:100%;}
 .mesgs {
   float: left;
   padding: 30px 15px 0 25px;
-  width: 40%;
+  width: 100%;
 }
 .sent_msg {
   float: right;
-  width: 46%;
+  width: 60%;
 }
 
 .messaging { padding: 0 0 50px 0;}

@@ -68,22 +68,25 @@ const getWidth = () => {
 /* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
  * such things.
  */
-const HomepageHeading = ({ mobile }) => (
+const HomepageHeading = (props, { mobile }) => {
+
+  return (
   <Container id="home-header"
      >
     <Header
       as='h1'
-      inverted
-      content='Neighborehood Community'
+      content="I'm Your Neighbor!"
       style={{
         fontSize: mobile ? '2em' : '4em',
-        fontWeight: 'normal',
+        fontWeight: 'bold',
+        textShadow: '0 1px 40px #ffffff',
         marginBottom: 0,
+        color: 'grey',
         marginTop: mobile ? '1.5em' : '3em',
       }}
     />
     <Header
-      inverted
+
       as='h2'
       content='Lend a hand to a neighbor'
       style={{
@@ -92,12 +95,12 @@ const HomepageHeading = ({ mobile }) => (
         marginTop: mobile ? '0.5em' : '1.5em',
       }}
     />
-    <Button primary size='huge'>
+  <Button primary size='huge' onClick={() => props.signUp()}>
       Get Started
       <Icon name='right arrow' />
     </Button>
   </Container>
-)
+)}
 
 HomepageHeading.propTypes = {
   mobile: PropTypes.bool,
@@ -113,6 +116,10 @@ class DesktopContainer extends Component {
   hideFixedMenu = () => this.setState({ fixed: false })
   showFixedMenu = () => this.setState({ fixed: true })
 
+  signUp = () => {
+    this.props.history.push('/signup')
+  }
+
   render() {
     console.log("props", this.props)
     const { children } = this.props
@@ -126,14 +133,14 @@ class DesktopContainer extends Component {
           onBottomPassedReverse={this.hideFixedMenu}
         >
           <Segment
-            inverted
+            className='home-segment'
+
             textAlign='center'
             style={{ minHeight: 700, padding: '1em 0em' }}
             vertical
           >
             <Menu
               fixed={fixed ? 'top' : null}
-              inverted={!fixed}
               pointing={!fixed}
               secondary={!fixed}
               size='large'
@@ -141,29 +148,35 @@ class DesktopContainer extends Component {
               <Container>
                 {!this.props.loggedIn ?
                 <Menu.Item position='right'>
-                  <Button as='a' inverted={!fixed} onClick={() => this.props.history.push('/login')}>
+                  <Button secondary as='a'  onClick={() => this.props.history.push('/login')}>
                     Log in
                   </Button>
-                  <Button as='a' inverted={!fixed} onClick={() => this.props.history.push('/signup')} primary={fixed} style={{ marginLeft: '0.5em' }}>
+                  <Button primary as='a' onClick={() => this.props.history.push('/signup')} primary={fixed} style={{ marginLeft: '0.5em' }}>
                     Sign Up
                   </Button>
                 </Menu.Item>
               :
               <Menu.Item position='right'>
-                <Button as='a' inverted={!fixed} onClick={() => this.props.LogOut()}>
+                <Button as='a' onClick={() => this.props.LogOut()}>
                   Log Out
                 </Button>
-                <Button as='a' inverted={!fixed} onClick={() => this.props.HasGroup()} primary={fixed} style={{ marginLeft: '0.5em' }}>
+                <Button as='a' onClick={() => this.props.HasGroup()} primary={fixed} style={{ marginLeft: '0.5em' }}>
                   Member Page
                 </Button>
               </Menu.Item>
             }
               </Container>
             </Menu>
-            <div
-              style={{ minHeight: 700, padding: '1em 0em', backgroundImage: "url(" + HelpImage + ")", maxWidth: '100%', height: 'auto', width: 'auto\9' }}
-              >
-            <HomepageHeading />
+            <div id='main'>
+            <HomepageHeading signUp={this.signUp}/>
+            <style>
+              {
+                `.home-segment{
+                  background-image: url('https://www1.nyc.gov/assets/planning/images/content/pages/plans/east-new-york/dcp_atlantic_warwick.jpg') !important;
+                  background-size: cover !important;
+                }`
+              }
+            </style>
             </div>
           </Segment>
         </Visibility>
@@ -198,7 +211,6 @@ class MobileContainer extends Component {
         <Sidebar
           as={Menu}
           animation='push'
-          inverted
           onHide={this.handleSidebarHide}
           vertical
           visible={sidebarOpened}
@@ -209,28 +221,15 @@ class MobileContainer extends Component {
 
         <Sidebar.Pusher dimmed={sidebarOpened}>
           <Segment
-            inverted
             textAlign='center'
             style={{ minHeight: 350, padding: '1em 0em' }}
             vertical
           >
             <Container>
-              <Menu inverted pointing secondary size='large'>
-                <Menu.Item onClick={this.handleToggle}>
-                  <Icon name='sidebar' />
-                </Menu.Item>
-
-                <Menu.Item position='right'>
-                  <Button as='a' inverted>
-                    Log in
-                  </Button>
-                  <Button as='a' inverted style={{ marginLeft: '0.5em' }}>
-                    Sign Up
-                  </Button>
-                </Menu.Item>
-              </Menu>
+            <Header as='h1'>Sorry, this website does not yet support mobile devices. Please visit using a computer. Thanks.</Header>
+            <span>We are working on it 😉</span>
             </Container>
-            <HomepageHeading mobile />
+            <img src='https://cdn4.iconfinder.com/data/icons/computer-screen-emoji-set/200/Screen_4-512.png'/>
           </Segment>
 
           {children}
@@ -266,26 +265,19 @@ const Home = (props) => {
         <Grid.Row>
           <Grid.Column width={8}>
             <Header as='h3' style={{ fontSize: '2em' }}>
-              We Help Companies and Companions
+              We create unity within your community.
             </Header>
             <p style={{ fontSize: '1.33em' }}>
-              We can give your company superpowers to do things that they never thought possible.
-              Let us delight your customers and empower your needs... through pure data analytics.
+              By You. You can now easily connect and get to know your neighbors, by sharing info, advice and arrange meetups.
             </p>
             <Header as='h3' style={{ fontSize: '2em' }}>
-              We Make Bananas That Can Dance
+              Help is now right around the corner.
             </Header>
             <p style={{ fontSize: '1.33em' }}>
-              Yes that's right, you thought it was the stuff of dreams, but even bananas can be
-              bioengineered.
+              For You. It’s easy. Just ask. Your neighbor will be at your doorstep ready to help you. Join your neighborhood group now.
             </p>
           </Grid.Column>
           <Grid.Column floated='right' width={6}>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column textAlign='center'>
-            <Button size='huge'>Check Them Out</Button>
           </Grid.Column>
         </Grid.Row>
       </Grid>
