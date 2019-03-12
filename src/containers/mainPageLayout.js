@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Login from '../components/LogIn'
 import SignUp from '../components/SignUp'
 import { Route, Link, Switch} from "react-router-dom";
-import AuthAdapter from '/Users/flatironschool/Development/final-project/final-project-front-end-2/src/lib/AuthAdapter.js'
+import AuthAdapter from '../lib/AuthAdapter.js'
 import PropTypes from 'prop-types'
 import HelpImage from '../lib/home_help.png'
 import { withRouter } from "react-router";

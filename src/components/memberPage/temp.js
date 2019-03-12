@@ -15,7 +15,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Carousel } from 'react-responsive-carousel';
 import { Container, Button, Header, Icon, Modal, Form, Card, Image, Label} from 'semantic-ui-react'
 import { withRouter } from "react-router-dom"
-import AuthAdapter from '/Users/flatironschool/Development/final-project/final-project-front-end-2/src/lib/AuthAdapter.js'
+import AuthAdapter from '../../lib/AuthAdapter.js'
 
 
 

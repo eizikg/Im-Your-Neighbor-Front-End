@@ -10,6 +10,7 @@ import { Provider } from 'react-redux'
 import configureStore from './store';
 import { BrowserRouter } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css'
+import ('module-alias/register')
 // import 'semantic-ui-css/semantic.min.css'
 
 

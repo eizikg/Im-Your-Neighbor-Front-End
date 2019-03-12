@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Header, Icon, Dropdown, Modal, Form, Label, TextArea} from 'semantic-ui-react'
-import AuthAdapter from '/Users/flatironschool/Development/final-project/final-project-front-end-2/src/lib/AuthAdapter.js'
+import AuthAdapter from '../../lib/AuthAdapter.js'
 import EventAddress from './EventAddress.js'
 
 export default class NewEvent extends Component {

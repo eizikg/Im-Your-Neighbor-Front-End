@@ -8,6 +8,7 @@
     "bootstrap": "^4.3.1",
     "googlemaps": "^1.12.0",
     "javascript-time-ago": "^2.0.1",
+    "module-alias": "^2.2.0",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.1",
@@ -30,8 +31,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -45,5 +45,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+    "_moduleAliases": {
+        "@AuthAdapter": "src/lib/AuthAdapter.js",
+        "@models": "app/models"
+    }
 }

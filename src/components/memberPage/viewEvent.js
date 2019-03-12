@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Header, Image, Modal, Checkbox, Grid, List} from 'semantic-ui-react'
-import AuthAdapter from '/Users/flatironschool/Development/final-project/final-project-front-end-2/src/lib/AuthAdapter.js'
+import AuthAdapter from '../../lib/AuthAdapter.js'
 
 class ViewEvent extends Component{
 

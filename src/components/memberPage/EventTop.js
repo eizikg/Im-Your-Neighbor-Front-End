@@ -5,7 +5,7 @@ import en from 'javascript-time-ago/locale/en'
 import Slider from './Slider.js'
 import { Container, Button, Item, Menu, Header, Grid, Icon, Segment ,Modal, Form, Card, Image, Label} from 'semantic-ui-react'
 import { withRouter } from "react-router-dom"
-import AuthAdapter from '/Users/flatironschool/Development/final-project/final-project-front-end-2/src/lib/AuthAdapter.js'
+import AuthAdapter from '../../lib/AuthAdapter.js'
 import { CSSTransitionGroup } from 'react-transition-group'
 import NewEvent from './newEvent.js'
 

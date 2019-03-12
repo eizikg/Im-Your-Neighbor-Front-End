@@ -1,6 +1,6 @@
 // import { withRouter } from "react-router";
 import React, { Component } from 'react';
-import AuthAdapter from '/Users/flatironschool/Development/final-project/final-project-front-end-2/src/lib/AuthAdapter.js'
+import AuthAdapter from '../lib/AuthAdapter.js'
 import DesktopContainer from '/Users/flatironschool/Development/final-project/final-project-front-end-2/src/containers/mainPageLayout.js'
 // import MainPageLayout from '../containers/mainPageLayout'
 //import MobileContainer from '/Users/flatironschool/Development/final-project/final-project-front-end-2/src/containers/mainPageLayout.js'
