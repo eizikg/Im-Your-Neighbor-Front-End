@@ -2,7 +2,7 @@ class AuthAdapter {
 
 
   static fetchUser() {
-    return fetch('http://localhost:3000/api/v1/volounteers/profile', {
+    return fetch('https://community-helpers.herokuapp.com/api/v1/volounteers/profile', {
      method: "POST",
      headers: {"Content-Type": "application/json",
      Authorization: localStorage.token}
@@ -10,7 +10,7 @@ class AuthAdapter {
   }
 
   static fetchUserGroups(user_id) {
-    return fetch(`http://localhost:3000/api/v1/volounteers/${user_id}`, {
+    return fetch(`https://community-helpers.herokuapp.com/api/v1/volounteers/${user_id}`, {
      method: "POST",
      headers: {"Content-Type": "application/json",
      Authorization: localStorage.token}
@@ -23,7 +23,7 @@ class AuthAdapter {
 //not completed or tested
   static joinEvent(params){
     console.log("params to create group", params);
-    return fetch('http://localhost:3000/api/v1/event_volounteers', {
+    return fetch('https://community-helpers.herokuapp.com/api/v1/event_volounteers', {
       method: "POST",
       headers: {"Content-Type": "application/json",
       Authorization: localStorage.token},
@@ -37,7 +37,7 @@ class AuthAdapter {
 
    static checklogin (email, password) {
      console.log("params for checking the login" ,email, password);
-     return fetch('http://localhost:3000/api/v1/volounteers/login', {
+     return fetch('https://community-helpers.herokuapp.com/api/v1/volounteers/login', {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({email:email, password:password})
@@ -45,7 +45,7 @@ class AuthAdapter {
   }
 
   static createUser(first_name, last_name, email, password) {
-   return fetch('http://localhost:3000/api/v1/volounteers', {
+   return fetch('https://community-helpers.herokuapp.com/api/v1/volounteers', {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({first_name: first_name, last_name: last_name, email: email, password: password})
@@ -54,7 +54,7 @@ class AuthAdapter {
 
  static joinGroup(user_id, group_id){
    console.log("params for joining a group", user_id, group_id)
-   return fetch('http://localhost:3000/api/v1/group_volounteers', {
+   return fetch('https://community-helpers.herokuapp.com/api/v1/group_volounteers', {
      method: "POST",
      headers: {"Content-Type": "application/json", Authorization: localStorage.token},
      body: JSON.stringify({
@@ -66,20 +66,20 @@ class AuthAdapter {
 
  static fetchGroup(group_id){
    console.log("parmas for fetching group data" ,group_id)
-   return fetch(`http://localhost:3000/api/v1/groups/${group_id}`, {
+   return fetch(`https://community-helpers.herokuapp.com/api/v1/groups/${group_id}`, {
 
     })
  }
 
  static fetchEvent(event_id){
- return fetch(`http://localhost:3000/api/v1/events/${event_id}`, {
+ return fetch(`https://community-helpers.herokuapp.com/api/v1/events/${event_id}`, {
     headers: {"Content-Type": "application/json", Authorization: localStorage.token}
  })
 }
 
  static newEvent(params){
    console.log(params)
-   return fetch(`http://localhost:3000/api/v1/events`, {
+   return fetch(`https://community-helpers.herokuapp.com/api/v1/events`, {
       method: "POST",
       headers: {"Content-Type": "application/json", Authorization: localStorage.token},
       body: JSON.stringify(params)
@@ -87,7 +87,7 @@ class AuthAdapter {
  }
 
  static getVolounteersLocation(params){
-   return fetch('http://localhost:3000/api/v1/location/volounteers', {
+   return fetch('https://community-helpers.herokuapp.com/api/v1/location/volounteers', {
      method: "PATCH",
      headers: {"Content-Type": "application/json", Authorization: localStorage.token},
      body: JSON.stringify(params)
@@ -95,7 +95,7 @@ class AuthAdapter {
  }
 
  static getGroupsLocation(params){
-   return fetch('http://localhost:3000/api/v1/location/groups', {
+   return fetch('https://community-helpers.herokuapp.com/api/v1/location/groups', {
      method: "PATCH",
      headers: {"Content-Type": "application/json", Authorization: localStorage.token},
      body: JSON.stringify(params)
@@ -103,7 +103,7 @@ class AuthAdapter {
  }
 
  static createGroup(name, description, user){
-   return fetch('http://localhost:3000/api/v1/groups', {
+   return fetch('https://community-helpers.herokuapp.com/api/v1/groups', {
      method: "POST",
      headers: {"Content-Type": "application/json", Authorization: localStorage.token},
      body: JSON.stringify({
@@ -116,7 +116,7 @@ class AuthAdapter {
 
  static updateEvent(params){
    console.log(params)
-   return fetch(`http://localhost:3000/api/v1/events/${params.event_id}`, {
+   return fetch(`https://community-helpers.herokuapp.com/api/v1/events/${params.event_id}`, {
      method: "PATCH",
      headers: {"Content-Type": "application/json", Authorization: localStorage.token},
      body: JSON.stringify(params)

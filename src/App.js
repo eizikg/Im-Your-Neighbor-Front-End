@@ -104,7 +104,7 @@ class App extends React.Component {
   }
 
   has_group = () => {
-    fetch(`http://localhost:3000/api/v1/volounteers/${this.state.user.id}`, {
+    fetch(`https://community-helpers.herokuapp.com/api/v1/volounteers/${this.state.user.id}`, {
       method: "GET",
       headers: {"Content-Type": "application/json",
       Authorization: localStorage.token}
