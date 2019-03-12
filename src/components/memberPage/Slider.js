@@ -68,7 +68,7 @@ class Slider extends Component {
                 <Icon color='orange' name='map marker'/>
                 {item.address}
               </Card.Meta>
-              <Card.Meta color='teal'>{item.volounteers_required ? <div><Icon color='violet' name='user circle outline'/>{item.volounteers_required} volounteer required</div>: null}</Card.Meta>
+              <Card.Meta color='teal'>{item.volounteers_required > 0 ? <div><Icon color='violet' name='user circle outline'/>{item.volounteers_required} volounteer required</div>: null}</Card.Meta>
               <ViewEvent eventData={item} group_id={this.props.group_id} event_id={item.id} joinEvent={this.props.joinEvent} user={this.props.user} updateEvent={this.props.updateEvent}/>
             </Card.Content>
           </Card>
@@ -93,7 +93,7 @@ class Slider extends Component {
             transitionAppear={true}
             transitionAppearTimeout={500}
             >
-                {this.cards()}
+                {this.props.item.length > 1 ? this.cards(): <span>Group events will apear here.</span>}
             </CSSTransitionGroup>
         <Icon center onClick={() => this.next()} link color='teal' size='huge' name='angle right'/>
       </Grid>

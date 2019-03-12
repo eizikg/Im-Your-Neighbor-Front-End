@@ -8,7 +8,7 @@ export default class NewEvent extends Component {
      modalOpen: false,
      description: "",
      time: "",
-     value: 1
+     value: 0
     }
 
 
@@ -65,14 +65,14 @@ export default class NewEvent extends Component {
       centered={true}
       size='small'
       >
-    <Modal.Header>Request for help</Modal.Header>
+    <Modal.Header>Post an event for all group members to see.</Modal.Header>
     <Modal.Content>
-    <Label content="volounteers required"></Label>
+    <Label content="volounteers required ?"></Label>
     <Dropdown options={options} value={value} simple item onChange={this.handleChange}/><br/>
       <Form>
-        <TextArea name="description" placeholder="Describe your problem" value={this.state.description} onChange={(e) => this.changeHandler(e)}/>
-        <Button onClick={this.handleClose}>Cancel</Button>
+        <TextArea name="description" placeholder="description" value={this.state.description} onChange={(e) => this.changeHandler(e)}/>
       </Form>
+      <br/>
       <Modal.Actions>
         <NestedModal
           newEvent={this.newEvent}
@@ -80,6 +80,7 @@ export default class NewEvent extends Component {
           time={this.state.time}
           />
       </Modal.Actions>
+      <Button onClick={this.handleClose} size='small' >Cancel</Button>
     </Modal.Content>
   </Modal>
     )
@@ -112,7 +113,7 @@ class NestedModal extends Component {
         onClose={this.close}
         size='small'
         trigger={
-          <Button float="left" primary icon>
+          <Button positive icon size='medium' floated='right'>
             Next <Icon name='right chevron' />
           </Button>
         }
