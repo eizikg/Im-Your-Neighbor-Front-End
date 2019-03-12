@@ -51,13 +51,13 @@ getVolounteersLocation=(params) =>{
 filter = (e) => {
   let { groupData } = this.state
   let filteredAraay = groupData.filter((elm) => {
-    return elm.name.includes(e.target.value)
+    return elm.name.toLowerCase().includes(e.target.value.toLowerCase())
   })
   this.setState({filtered: filteredAraay, activeItem: "filtered"})
 }
 
-newGroup = ({name, description}) => {
-  AuthAdapter.createGroup(name, description, this.props.user)
+newGroup = (params) => {
+  AuthAdapter.createGroup(params)
  .then(res => {
    if (!res.ok){
      console.log(res.ok)

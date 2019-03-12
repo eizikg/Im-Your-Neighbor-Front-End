@@ -19,15 +19,14 @@ class newGroup extends Component {
 
   handleClose = () => this.setState({ modalOpen: false })
 
-  changeHandler = (event) => {
+  changeHandler = (e) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [e.target.name]: e.target.value
     })
   }
 
 
    createGroup = (e) => {
-     console.log("create group")
      this.props.createGroup({name: this.state.name, descripton: this.state.description})
     this.setState({ modalOpen: false, name: "", descripton: "" })
   }
@@ -46,8 +45,12 @@ return (
   <Form>
     <h3>New Group</h3>
       <Form.Field>
+        <label>Name</label>
+        <input placeholder='Name' name='name' value={this.state.name} onChange={this.changeHandler}/>
+      </Form.Field>
+      <Form.Field>
         <label>Description</label>
-        <input placeholder='Description' name='descripton' value={this.state.description} onChange={(e) => this.changeHandler(e)}/>
+        <input placeholder='Description' name='descripton' value={this.state.description} onChange={this.changeHandler}/>
       </Form.Field>
       <Button.Group>
         <Button type='submit' onClick={this.handleClose}>Cancel</Button>

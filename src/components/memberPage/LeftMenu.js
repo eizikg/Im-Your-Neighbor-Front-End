@@ -29,7 +29,6 @@ class LeftMenu extends Component {
   }
 
   handleGroupChange = (e, {name}) => {
-    console.log(name)
     this.setState({ activeItem: name })
     this.props.history.push(`/members/${name}`)
   }
@@ -41,6 +40,7 @@ class LeftMenu extends Component {
   }
 
   render() {
+    const { activeItem } = this.state || {}
     let groups = this.props.user.groups ? this.props.user.groups.map((group) => {
       return (
       <Menu.Item
@@ -52,8 +52,6 @@ class LeftMenu extends Component {
       </Menu.Item>
     )
   }) : null
-    const { activeItem } = this.state || {}
-    console.log(this.props.members)
     return (
       <div>
       <Menu id="menu" size="large" pointing vertical style={{ minHeight: 1000}}>
@@ -66,37 +64,27 @@ class LeftMenu extends Component {
           </Dropdown.Menu>
         </Dropdown>
       </Menu.Item>
-       <br/>
+      <br/>
         { this.state.showGroups ?
      <Menu.Item>
        <Menu.Header>Your Groups</Menu.Header>
        <Menu.Menu>{groups}</Menu.Menu>
      </Menu.Item> : null
      }
-
-
       <Menu.Item>
-
-      <Menu.Header size="huge">Members    <Icon name='users'/></Menu.Header>
-
-      <Menu.Menu>
-      {this.props.members.map((member) => {
-        return (
-        <Menu.Item
-        >
-        <Icon color='teal'  name='user large circle'></Icon>
-        {`${member.first_name} ${member.last_name}`}
-        {member.is_admin ? <Label color="blue">admin</Label> : null}
+        <Menu.Header size="huge">Members    <Icon name='users'/></Menu.Header>
+        <Menu.Menu>
+          {this.props.members.map((member) => {
+          return (
+        <Menu.Item >
+          <Icon color='teal'  name='user large circle'></Icon>
+          {`${member.first_name} ${member.last_name}`}
+          {member.is_admin ? <Label color="blue">admin</Label> : null}
         </Menu.Item>
-      )
-      })}
-      </Menu.Menu>
+          )
+          })}
+        </Menu.Menu>
       </Menu.Item>
-
-
-
-
-      
       </Menu>
       </div>
     );

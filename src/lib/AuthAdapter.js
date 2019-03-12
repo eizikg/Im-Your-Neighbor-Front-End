@@ -102,15 +102,11 @@ class AuthAdapter {
    })
  }
 
- static createGroup(name, description, user){
+ static createGroup(params){
    return fetch('https://community-helpers.herokuapp.com/api/v1/groups', {
      method: "POST",
      headers: {"Content-Type": "application/json", Authorization: localStorage.token},
-     body: JSON.stringify({
-       volounteer_id: user.id,
-       name: name,
-       description: description
-     })
+     body: JSON.stringify(params)
    })
  }
 

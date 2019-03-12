@@ -4,7 +4,6 @@ import SignUp from '../components/SignUp'
 import { Route, Link, Switch} from "react-router-dom";
 import AuthAdapter from '../lib/AuthAdapter.js'
 import PropTypes from 'prop-types'
-import HelpImage from '../lib/home_help.png'
 import { withRouter } from "react-router";
 import EventTop from '../components/memberPage/EventTop.js'
 import Messaging from './Messaging.js'

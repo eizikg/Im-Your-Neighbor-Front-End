@@ -3,17 +3,12 @@ import { Route, Link, Switch} from "react-router-dom";
 import LogIn from './components/LogIn.js'
 import SignUp from './components/SignUp'
 import Home from './containers/Home'
-import MemberPage from './containers/MemberPage'
 import AuthAdapter from './lib/AuthAdapter'
 import Groups from './containers/Groups.js'
 import { withRouter } from "react-router-dom"
 import Messaging from './containers/Messaging.js'
 import MainPageLayout from './containers/mainPageLayout.js'
-import { connect } from 'react-redux';
-import { simpleAction } from './actions/simpleAction';
 
-// import 'semantic-ui-css/semantic.min.css'
-// import Settings from './containers/settings.js'
 
 class App extends React.Component {
 
