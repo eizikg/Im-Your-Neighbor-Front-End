@@ -71,7 +71,6 @@ export default class NewEvent extends Component {
     <Dropdown options={options} value={value} simple item onChange={this.handleChange}/><br/>
       <Form>
         <TextArea name="description" placeholder="Describe your problem" value={this.state.description} onChange={(e) => this.changeHandler(e)}/>
-        <TextArea name="time" placeholder="*optional  When?" value={this.state.description} onChange={(e) => this.changeHandler(e)}/>
         <Button onClick={this.handleClose}>Cancel</Button>
       </Form>
       <Modal.Actions>
