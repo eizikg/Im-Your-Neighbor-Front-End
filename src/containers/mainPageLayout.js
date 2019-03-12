@@ -143,20 +143,6 @@ export class ResponsiveContainer extends Component {
     groupData: [],
     user: {}
   }
-
-  // componentDidMount(){
-  //     AuthAdapter.fetchGroup(this.props.match.params.id)
-  //     .then(res => res.json())
-  //     .then(data =>{
-  //       console.log("fetching the groups", data)
-  //     this.setState({
-  //       eventData: data[0].events,
-  //       members: data[0].volounteers,
-  //       groupData: data[0],
-  //       params: this.props.match.params.id
-  //     })
-  //   })
-  // }
   componentDidMount(){
     console.log("props inresponsive for mount", this.props.user)
     if (this.props.user) {
@@ -244,4 +230,3 @@ class MainPageLayout extends Component{
 )}
 }
 export default withRouter(MainPageLayout)
-// export {MobileContainer, DesktopContainer}

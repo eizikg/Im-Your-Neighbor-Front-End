@@ -79,5 +79,3 @@ class ViewEvent extends Component{
 }
 
 export default ViewEvent
-
-// this.state.volounteers.map((volounteer)=> <p>`hello ${volounteer}`</p>)

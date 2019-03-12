@@ -33,18 +33,6 @@ class SendMessageForm extends Component {
           </div>
          )
      }
-
-     // <Form
-     //     onSubmit={this.handleSubmit}
-     //     className="send-message-form">
-     //     <Input
-     //         size='large'
-     //         onChange={this.handleChange}
-     //         value={this.state.message}
-     //         placeholder="Type your message and hit ENTER"
-     //         type="text" />
-         // </Form>
-
 }
 
 export default SendMessageForm;
