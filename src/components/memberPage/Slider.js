@@ -93,7 +93,7 @@ class Slider extends Component {
             transitionAppear={true}
             transitionAppearTimeout={500}
             >
-                {this.props.item.length > 1 ? this.cards(): <span>Group events will apear here.</span>}
+                {this.props.item.length > 0 ? this.cards(): <span>Group events will apear here.</span>}
             </CSSTransitionGroup>
         <Icon center onClick={() => this.next()} link color='teal' size='huge' name='angle right'/>
       </Grid>
