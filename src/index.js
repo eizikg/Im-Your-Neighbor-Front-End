@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import reducer from './reducers/login'
+import { createStore } from "redux";
 import App from './App';
 import LogIn from './components/LogIn'
 import SignUp from './components/SignUp'
@@ -10,19 +13,18 @@ import { BrowserRouter } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css'
 
 
+const store = createStore(
+   reducer, {IsLoggedIn: false}
++  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+ );
 
-const routing = (
-  <Router>
-    <div>
-      <Route path="/" component={App} />
-    </div>
-  </Router>
-)
 
 
 ReactDOM.render(
   <BrowserRouter>
+    <Provider store={store}>
     <App/>
+    </Provider>
   </BrowserRouter>,
    document.getElementById('root'));
 

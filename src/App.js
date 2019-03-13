@@ -8,6 +8,8 @@ import Groups from './containers/Groups.js'
 import { withRouter } from "react-router-dom"
 import Messaging from './containers/Messaging.js'
 import MainPageLayout from './containers/mainPageLayout.js'
+import { connect } from 'react-redux';
+import { login, logOut, setUser } from './actions/login';
 
 
 class App extends React.Component {
@@ -27,13 +29,13 @@ class App extends React.Component {
     AuthAdapter.checklogin(email, password)
     .then(resp => {
       let json = resp.json()
-      // console.log(resp.status);
       if (resp.status === 200){
         return json.then(data =>{
             this.setState({
             loggedIn: true,
             user: data.user
           })
+          this.props.setUser(data.user)
           localStorage.token = data.auth_token
           this.has_group()
         }
@@ -52,7 +54,6 @@ class App extends React.Component {
       return res.json()
     })
     .then(data =>{
-       console.log(data)
         this.setState({
         loggedIn: true,
         user: data.user
@@ -62,8 +63,7 @@ class App extends React.Component {
     }
     )
     .catch(error => {
-      // alert(error)
-      console.error(error)
+      alert(error)
     })
   }
 
@@ -75,6 +75,7 @@ class App extends React.Component {
       user: {}
     })
     this.props.history.push(`/`)
+    this.props.LOGGED_OUT()
   }
 
 
@@ -133,6 +134,8 @@ class App extends React.Component {
          user: data,
          loggedIn: true
        })
+       this.props.setUser(data)
+       this.props.LOGGED_IN()
      }
    })
   }
@@ -189,4 +192,13 @@ class App extends React.Component {
 
 }
 
-export default withRouter(App);
+
+const mapStateToProps = state => {
+    return {IsLoggedIn: state.IsLoggedIn, storeUser: state.user}
+  }
+
+const mapDispatchToProps = dispatch => ({
+  LOGGED_IN: () => dispatch(login()), LOGGED_OUT: () => dispatch(logOut()), setUser: (object) => dispatch(setUser(object))
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
