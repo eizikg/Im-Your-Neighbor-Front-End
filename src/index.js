@@ -15,7 +15,6 @@ import 'semantic-ui-css/semantic.min.css'
 
 const store = createStore(
    reducer, {IsLoggedIn: false}
-+ window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
  );
 
 
