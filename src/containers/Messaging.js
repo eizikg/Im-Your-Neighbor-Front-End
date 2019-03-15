@@ -4,6 +4,7 @@ import Chatkit from '@pusher/chatkit'
 import MessageList from '../components/messages/MessageList.js'
 import SendMessageForm from '../components/messages/SendMessageForm.js'
 import { Header, Icon, Segment} from 'semantic-ui-react'
+import { connect } from 'react-redux';
 
 class Messaging extends Component {
 
@@ -84,5 +85,9 @@ class Messaging extends Component {
      }
 
 }
+
+const mapStateToProps = state => {
+   return {IsLoggedIn: state.IsLoggedIn, user: state.user}
+ }
 
 export default Messaging;

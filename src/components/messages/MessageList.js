@@ -22,7 +22,7 @@ class MessageList extends Component {
             <div className="inbox_msg">
               <div className="mesgs">
                 <div className="msg_history">
-                {this.props.messages.lenght > 0 ? this.props.messages.map((message, index) => {
+                {this.props.messages.map((message, index) => {
                   // console.log(message)
                     return (
                       <div className="incoming_msg">
@@ -35,7 +35,7 @@ class MessageList extends Component {
                             </div>
                           </div>
                     )
-                }) : <span>Messages will apear here.</span> }
+                })}
                 </div>
               </div>
             </div>
