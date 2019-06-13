@@ -1,6 +1,6 @@
 You can watch a demo of the app here https://youtu.be/kj3K9pf0mAY
 
-* Built using React. *
+** Built using React. **
 
 Redux was used partialy.
 
