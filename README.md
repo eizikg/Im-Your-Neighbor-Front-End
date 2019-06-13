@@ -16,6 +16,7 @@ Redux was used partialy.
 
 ## Highlights:
 
-custom carousel
-responsive design
+* Fast. The api is split up into smaller pieces, so they're loaded only at the time needed. Example: only when clicking to see and envent, is the RSVP loaded.
+* Custom carousel with css transitions.
+* Responsive design (when using on a mobile device, a message is displayed asking the user to use desktop instead).
 
