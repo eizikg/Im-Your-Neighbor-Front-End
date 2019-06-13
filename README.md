@@ -3,6 +3,7 @@ You can watch a demo of the app here https://youtu.be/kj3K9pf0mAY
 **Built using React.**
 
 Redux was used partialy.
+React router.
 
 **UI library:** Semantic UI.
 
