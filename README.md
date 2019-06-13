@@ -6,7 +6,7 @@ Redux was used partialy.
 
 **UI library:** Semantic UI.
 
-# Some other libraries/ api used:
+## Some other libraries/ api used:
 
 * Google maps API for address and auto-complete.
 
